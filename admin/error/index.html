@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang='en' class=''>
+
+<head>
+
+  <meta charset='UTF-8'>
+  <title>Error de permisos</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name=viewport content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: none;
+  }
+  #container {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin: 1em auto;
+    max-width: 60%;
+  }
+
+  #container div{
+      display: block;
+      /*margin: auto;*/
+      padding: 1em;
+  }
+
+  #container #browser a{
+      position: relative;
+      text-decoration: none;
+      color: blue;
+  }
+
+  #container #browser a:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: blue;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+  }
+
+  #container #browser a:hover:before {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+
+  #loginContainer{
+    margin-top: 4em;
+  }
+  #loginContainer .btn-2 {
+    background-color: #00AFD1;
+  }
+  #loginContainer .btn-2 .round {
+    background-color: #00c4eb;
+  }
+  #loginContainer a {
+    text-decoration: none;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    padding: 12px 53px 12px 23px;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-weight: bold;
+    position: relative;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  #loginContainer a:hover:before {
+    visibility: hidden;
+    transition: none;
+  }
+  #loginContainer a span {
+    position: relative;
+    z-index: 3;
+  }
+  #loginContainer a .round {
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    z-index: 2;
+  }
+  #loginContainer a .round i {
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    left: 50%;
+    margin-left: -4px;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  #loginContainer .txt {
+    font-size: .9em;
+    line-height: 1.45;
+  }
+  #loginContainer .type-1 a:hover {
+    padding-left: 48px;
+    padding-right: 28px;
+  }
+  #loginContainer .type-1 a:hover .round {
+    width: calc(100% - 6px);
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+  }
+  #loginContainer .type-1 a:hover .round i {
+    left: 12%;
+  }
+
+
+
+  
+  a{background-color:transparent;}
+    a:active{outline:0;}
+    a:hover{outline:0;}
+    div:focus{outline:0;}
+    img{border:0;}
+    *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;}
+    h2{margin-top:0;margin-bottom:.5rem;}
+    a{color:#000078;text-decoration:none;}
+    a:hover{color:#706F6F;text-decoration:none;}
+    img{max-width:100%;height:auto;}
+    .ruler{border:0 solid #D0D0D0;border-top-width:4px;}
+    .ruler--double{border-bottom-width:4px;}
+    h2{font-size:2.5rem;line-height:0.95;font-weight:600;font-family:uoc-sans, Arial;color:inherit;margin-bottom:16px;}
+    .font-default{font-family:uoc-sans, Arial;font-weight:400;}
+    .brand-header{padding:14px 0 13px;max-height:70px;}
+    .brand-header.brand-secondary{background:#73EDFF;}
+    .brand-header .top-logo{padding-left:0;max-width:60px;}
+    .brand-header .w100-inline-block{width:100%;float:left;display:inline-block;}
+    .brand-header .ruler--white{border-color:#FFFFFF;}
+    .brand-header .nav-menu-title{font-family:uoc-serif, Georgia;float:left;font-size:0.87rem;max-width:110px;min-height:35px;margin:0;}
+    @media (max-width: 1200px) and (min-width: 992px){
+    .brand-header .nav-menu-title{font-size:0.83rem;}
+    }
+    .brand-header .nav-menu-top .top-logo{height:43px;}
+    .brand-header .nav-menu-top .top-logo img{height:43px;max-width:57px;}
+    @media (max-width: 1200px) and (min-width: 992px){
+    .brand-header .nav-menu-top .top-logo img{max-width:100%;width:100%;}
+    }
+    .brand-header .mobile-menu{width:100%;}
+    .brand-header .mobile-menu .menu-mobile-container{position:relative;padding-left:64px;padding-right:64px;}
+    .brand-header .mobile-menu .menu-mobile-container .top-slogan{width:100%;}
+    .brand-header .mobile-menu .menu-mobile-container .top-slogan .nav-menu-title{height:44px;font-size:.875rem;min-width:110px;max-width:100%;}
+    .brand-header .mobile-menu .menu-mobile-container .top-logo{position:absolute;left:0;width:58px;padding-right:0;}
+    .brand-header .mobile-menu .menu-mobile-container .top-logo img{min-width:58px;height:44px;width:58px;}
+    @media (min-width: 992px){
+    .header-2 .desktop-menu .top-slogan{width:calc( 83.3333333333% + 1.25rem);}
+    }
+    @media (min-width: 1200px){
+    .header-2 .desktop-menu .top-slogan{width:calc( 83.3333333333% + 2.375rem);}
+    }
+    .header-2 .mobile-menu .menu-mobile-container{padding-right:0;}
+    @media (max-width: 543.9px){
+    .hidden-xs{display:none!important;}
+    }
+    @media (min-width: 544px) and (max-width: 767.9px){
+    .hidden-sm{display:none!important;}
+    }
+    @media (min-width: 768px) and (max-width: 991.9px){
+    .hidden-md{display:none!important;}
+    }
+    @media (min-width: 992px) and (max-width: 1199.9px){
+    .hidden-lg{display:none!important;}
+    }
+    @media (min-width: 1200px){
+    .hidden-xl{display:none!important;}
+    }
+    .container{max-width:75.25rem;margin-right:auto;margin-left:auto;padding-left:0.75rem;padding-right:0.75rem;}
+    .container:before,.container:after{content:" ";display:table;}
+    .container:after{clear:both;}
+    .col-md-1,.col-md-10,.col-lg-10{position:relative;min-height:1px;padding-left:0.125rem;padding-right:0.125rem;}
+    @media (min-width: 768px){
+    .col-md-1,.col-md-10,.col-lg-10{padding-left:0.25rem;padding-right:0.25rem;}
+    }
+    @media (min-width: 768px){
+    .col-md-1,.col-md-10{float:left;}
+    .col-md-1{width:8.3333333333%;}
+    .col-md-10{width:83.3333333333%;}
+    }
+    @media (min-width: 992px){
+    .col-lg-10{float:left;}
+    .col-lg-10{width:83.3333333333%;}
+    }
+    .clearfix:before,.clearfix:after{content:" ";display:table;}
+    .clearfix:after{clear:both;}
+    [class^="col-"]{padding-right:15px;padding-left:15px;}
+    .w100{width:100%!important;}
+    .col-clear{padding-left:0!important;padding-right:0!important;}
+    .col-clear-right{padding-right:0!important;}
+    .brand-header{max-height:none;}
+    .brand-header .mobile-menu .menu-mobile-container{padding:0;}
+    .brand-header .mobile-menu .menu-mobile-container .top-logo{float:left;position:relative;width:57px;}
+    .brand-header .mobile-menu .menu-mobile-container .top-logo img{height:auto;}
+    .brand-header .mobile-menu .menu-mobile-container .top-slogan{float:left;padding-left:10px;width:calc( 100% - 57px);}
+    .brand-header .nav-menu-top .top-logo{max-width:57px;height:auto;}
+    .brand-header .nav-menu-top .top-logo a{display:inline-block;}
+    .brand-header .nav-menu-top .top-logo img{height:auto;}
+    .nav-menu-top [class^="col-"]{padding-right:10px;padding-left:10px;}
+    @media (min-width: 48em){
+    .container{width:750px;}
+    }
+    @media (min-width: 62em){
+    .container{width:970px;}
+    }
+    @media (min-width: 75em){
+    .container{width:1170px;}
+    }
+    @media (max-width: 61.99em){
+    .nav-menu-top [class^="col-"]{padding-right:7px;padding-left:7px;}
+    }
+
+  @media (max-width: 600px) {
+    #container{
+      width: 99%;
+      max-width: 99%;
+      display: block;
+      margin: 1em 0em;
+      padding: 0;
+    }
+    body{
+      font-size: 1.2em;
+    }
+    #container div{
+      padding: 0;
+    }
+    #loginContainer a {
+      font-size: .75em;
+      line-height: 1.45;
+    }
+  }
+
+</style>
+  
+
+</head>
+
+<body>
+<div id="app">
+
+  <div class="header-2 brand-header brand-secondary" islogged="true"><div class="container clearfix"><div class="col-clear nav-menu-top"><div class="hidden-xs hidden-sm desktop-menu"><div class="col-md-1 top-logo top-logo-desktop hidden-xs hidden-sm col-clear"><a href="https://uoc.edu" title="Universitat Oberta de Catalunya"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABZCAYAAADrXdDyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDRGQ0Y4QjkyMzYzMTFFNzg4NENBNjNDMzUwRDg1Q0MiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDRGQ0Y4QkEyMzYzMTFFNzg4NENBNjNDMzUwRDg1Q0MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowNEZDRjhCNzIzNjMxMUU3ODg0Q0E2M0MzNTBEODVDQyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowNEZDRjhCODIzNjMxMUU3ODg0Q0E2M0MzNTBEODVDQyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmBh4MsAAAseSURBVHja7F0HVFVH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" title="Universitat Oberta de Catalunya" alt="Universitat Oberta de Catalunya" class="img-responsive w100"></a></div><div class="col-md-10 col-lg-10 top-slogan col-clear-right"><span class="ruler ruler--white w100-inline-block"></span><h2 class="nav-menu-title font-default">Universitat Oberta de Catalunya</h2><span class="ruler ruler--white w100-inline-block"></span></div></div><div class="hidden-lg hidden-xl hidden-md"><div class="mobile-menu"><div class="menu-mobile-container"><div class="top-logo"><a href="https://uoc.edu" title="Universitat Oberta de Catalunya"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABZCAYAAADrXdDyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDRGQ0Y4QjkyMzYzMTFFNzg4NENBNjNDMzUwRDg1Q0MiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDRGQ0Y4QkEyMzYzMTFFNzg4NENBNjNDMzUwRDg1Q0MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowNEZDRjhCNzIzNjMxMUU3ODg0Q0E2M0MzNTBEODVDQyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowNEZDRjhCODIzNjMxMUU3ODg0Q0E2M0MzNTBEODVDQyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmBh4MsAAAseSURBVHja7F0HVFVH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" title="Universitat Oberta de Catalunya" alt="Universitat Oberta de Catalunya" class="img-responsive w100"></a></div><div class="top-slogan"><h2 class="ruler ruler--double ruler--white w100-inline-block nav-menu-title font-default">Universitat Oberta de Catalunya</h2></div></div></div></div></div></div></div>
+
+  <div id="container">
+  
+    <section id="loginContainer">
+        <div class="type-1">
+            <div>
+                <a href="#" id="login" class="btn btn-2">
+                    <span class="txt">Entra</span>
+                    <span class="round"><i class="fa fa-chevron-right">></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+  </div>
+</div>
+
+</body>
+
+<script>
+    const idpLogin = 'https://id-provider.uoc.edu/idp/profile/cas/login?service=';
+    document.getElementById('login').setAttribute('href', idpLogin + window.location.href);
+
+    document.getElementById('login').onclick = function(){
+      window.sessionStorage.setItem('reload', 0);
+    }
+
+    if(window.sessionStorage.getItem('reload')*1===0){
+      window.location.replace(idpLogin + window.location.href);
+    }
+
+    if(document.cookie.indexOf("campusSessionId")>-1){
+      window.sessionStorage.setItem('reload', (window.sessionStorage.getItem('reload')*1)+1);
+      if(window.sessionStorage.getItem('reload')*1<15){
+        window.location.reload(true);
+      }else{
+        window.sessionStorage.setItem('reload', -1);
+      }
+
+      setTimeout(function(){
+        document.getElementsByTagName("body")[0].style.display = "block";
+      }, 500);
+    }
+
+</script>
+
+</html>

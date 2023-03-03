@@ -1,0 +1,7 @@
+id,bucket,folder,role
+rsanchez@samltest.id,webftp-files-test,00001,user,rw
+rsanchez@samltest.id,webftp-files-test,00002,user,rw
+rsanchez@samltest.id,webftp-files-test-2,00001/sub_00001,user,ro
+msmith@samltest.id,webftp-files-test,00001,user,rw
+scooper@samltest.id,webftp-files-test,00001,admin,rw
+scooper@samltest.id,webftp-files-test-2,,admin,rw

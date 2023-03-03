@@ -1,0 +1,14 @@
+{
+    "ci": "webftp",
+    "UOCEnv": "pro",
+    "Departament": "uocit",
+    "Programa": "TECNO",
+    "IDP_HOST": "id-provider.uoc.edu",
+    "API_PATH": "/api",
+    "DOMAIN": "ftp.uoc.edu",
+    "DOMAIN_CERT_ARN": "arn:aws:acm:us-east-1:630017104396:certificate/326f89e5-cef4-4145-97e3-970cb55c887a",
+    "PUBLIC_CDN_DOMAIN": "public-content.ftp.uoc.edu",
+    "PUBLIC_CDN_DOMAIN_CERT_ARN": "arn:aws:acm:us-east-1:630017104396:certificate/b57b985f-2dfc-4238-9a07-934bccaf2673",
+    "PROTECTED_CDN_DOMAIN": "protected-content.ftp.uoc.edu",
+    "PROTECTED_CDN_DOMAIN_CERT_ARN": "arn:aws:acm:us-east-1:630017104396:certificate/9ace583e-a843-4b3f-ac11-0419e2f10e3b"
+}

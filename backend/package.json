@@ -1,0 +1,8 @@
+{
+  "name": "webftp-backend",
+  "version": "0.0.1",
+  "description": "Lambdas for webftp backend",
+  "scripts": {
+    "build": "npm --prefix ./custom-auth install ./custom-auth && npm --prefix ./login install ./login"
+  }
+}

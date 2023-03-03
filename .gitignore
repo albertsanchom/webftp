@@ -1,0 +1,12 @@
+.secrets
+node_modules
+package-lock.json
+setup.demo.json
+yarn*
+.env
+.serverless
+*sp-metadata.xml
+http-server
+*.cert
+!*sample-*
+data
