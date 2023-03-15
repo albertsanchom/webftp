@@ -2,7 +2,7 @@
   <section id="loginContainer" v-if="!isLogged">
   <div class="type-1">
       <div>
-          <a href="#" id="login" class="btn btn-2" v-on:click.prevent="doLogin()">
+          <a href="/api/getJWT" id="login" class="btn btn-2">
               <span class="txt">{{ $t('login') }}</span>
               <span class="round"><i class="fa fa-chevron-right"></i></span>
           </a>
@@ -16,10 +16,10 @@
     margin-top: 4em;
   }
   #loginContainer .btn-2 {
-    background-color: #00AFD1;
+    background-color: #BF0000;
   }
   #loginContainer .btn-2 .round {
-    background-color: #00c4eb;
+    background-color: #e25e5e;
   }
   #loginContainer a {
     text-decoration: none;
@@ -131,8 +131,13 @@
     mounted: function () {
       const that = this;
 
-      let token_ttl=window.localStorage.getItem("token_ttl");
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const token = urlParams.get('token');
 
+      let token_ttl=window.localStorage.getItem("token_ttl");
+      //let token_ttl = -1;
+      //let campusJWT = token;
       let campusJWT = getCookieValue('campusJWT');
       if(campusJWT){ // if token from campus exists tries to use it
         window.localStorage.setItem("token", campusJWT);
@@ -140,24 +145,13 @@
           campusJWT = JSON.parse(decoder(campusJWT.split(".")[1]));
           token_ttl = campusJWT.exp;
           window.localStorage.setItem("token_ttl", token_ttl);
-          campusJWT = JSON.parse(campusJWT.sub);
-          window.localStorage.setItem("token_name", campusJWT.givenName);
+          //campusJWT = JSON.parse(campusJWT.sub);
+          console.log("campusJWT:" + campusJWT);
+          window.localStorage.setItem("token_name", campusJWT["urn:oid:2.5.4.42"]);
         }catch(e){
           console.error("token error");
         }
       }
-
-      window.addEventListener('message', function(e) { //this is for SAML login (when no campusJWT present or whatever)
-        if(!e || !e.data || !e.data.split){
-          return;
-        }
-        const message = JSON.parse(decoder(e.data.split(".")[1]));
-        window.localStorage.setItem("token_ttl", message.exp);
-        window.localStorage.setItem("token", e.data);
-        window.localStorage.setItem("token_name", message["urn:oid:2.5.4.42"]);
-        window.LoginWindow.close();
-        that.emitLogged({isLogged : true, name : message["urn:oid:2.5.4.42"]});
-      });
 
       if((+new Date()/1000)>token_ttl){
         window.localStorage.removeItem("token");

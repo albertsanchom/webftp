@@ -3,27 +3,14 @@
         <div class="container clearfix">
             <div class="col-clear nav-menu-top">
                 <div class="hidden-xs hidden-sm desktop-menu">
-                    <div class="col-md-1 top-logo top-logo-desktop hidden-xs hidden-sm col-clear">
-                        <a href="https://uoc.edu" title="Universitat Oberta de Catalunya"><img src="@/assets/img/uoc-logo.png" class="img-responsive w100" title="Universitat Oberta de Catalunya" alt="Universitat Oberta de Catalunya"></a>
-                    </div>
-                    <div class="col-md-10 col-lg-10 top-slogan col-clear-right">
-                        <span class="ruler ruler--white w100-inline-block"></span>
-                        <h2 class="nav-menu-title font-default">Universitat Oberta de Catalunya</h2>
-                        <span class="ruler ruler--white w100-inline-block"></span>
-                    </div>
-                    
+                        <a href="https://gencat.cat" title="Generalitat de Catalunya" style="display: flex; justify-content: center;"><img src="@/assets/img/gencat-logo.png" class="img-responsive" title="Generalitat de Catalunya" alt="Generalitat de Catalunya"></a>               
                 </div>
                 <div class="hidden-lg hidden-xl hidden-md">
                     <div class="mobile-menu">
                         <div class="menu-mobile-container">
-                            <div class="top-logo">
-                                <a href="https://uoc.edu" title="Universitat Oberta de Catalunya">
-                                    <img src="@/assets/img/uoc-logo.png" class="img-responsive w100" title="Universitat Oberta de Catalunya" alt="Universitat Oberta de Catalunya">
+                                <a href="https://gencat.cat" title="Generalitat de Catalunya" style="display: flex; justify-content: center;">
+                                    <img src="@/assets/img/gencat-logo.png" class="img-responsive" title="Generalitat de Catalunya" alt="Generalitat de Catalunya">
                                 </a>
-                            </div>
-                            <div class="top-slogan">
-                                <h2 class="ruler ruler--double ruler--white w100-inline-block nav-menu-title font-default">Universitat Oberta de Catalunya</h2>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,22 +29,22 @@
     h2{margin-top:0;margin-bottom:.5rem;}
     a{color:#000078;text-decoration:none;}
     a:hover{color:#706F6F;text-decoration:none;}
-    img{max-width:100%;height:auto;}
+    img{max-width:20%;height:auto;}
     .ruler{border:0 solid #D0D0D0;border-top-width:4px;}
     .ruler--double{border-bottom-width:4px;}
-    h2{font-size:2.5rem;line-height:0.95;font-weight:600;font-family:uoc-sans, Arial;color:inherit;margin-bottom:16px;}
-    .font-default{font-family:uoc-sans, Arial;font-weight:400;}
-    .brand-header{padding:14px 0 13px;max-height:70px;}
-    .brand-header.brand-secondary{background:#73EDFF;}
+    h2{font-size:2.5rem;line-height:0.95;font-weight:600;font-family:Arial;color:inherit;margin-bottom:16px;}
+    .font-default{font-family:Arial;font-weight:400;}
+    .brand-header{padding:14px 0 13px;max-height:140px;}
+    .brand-header.brand-secondary{background:#FFFFFF;}
     .brand-header .top-logo{padding-left:0;max-width:60px;}
     .brand-header .w100-inline-block{width:100%;float:left;display:inline-block;}
     .brand-header .ruler--white{border-color:#FFFFFF;}
-    .brand-header .nav-menu-title{font-family:uoc-serif, Georgia;float:left;font-size:0.87rem;max-width:110px;min-height:35px;margin:0;}
+    .brand-header .nav-menu-title{font-family:Georgia;float:left;font-size:0.87rem;max-width:110px;min-height:35px;margin:0;}
     @media (max-width: 1200px) and (min-width: 992px){
     .brand-header .nav-menu-title{font-size:0.83rem;}
     }
     .brand-header .nav-menu-top .top-logo{height:43px;}
-    .brand-header .nav-menu-top .top-logo img{height:43px;max-width:57px;}
+    .brand-header .nav-menu-top .top-logo img{height:43px;max-width:150px;}
     @media (max-width: 1200px) and (min-width: 992px){
     .brand-header .nav-menu-top .top-logo img{max-width:100%;width:100%;}
     }
@@ -116,7 +103,7 @@
     .brand-header .mobile-menu .menu-mobile-container .top-logo{float:left;position:relative;width:57px;}
     .brand-header .mobile-menu .menu-mobile-container .top-logo img{height:auto;}
     .brand-header .mobile-menu .menu-mobile-container .top-slogan{float:left;padding-left:10px;width:calc( 100% - 57px);}
-    .brand-header .nav-menu-top .top-logo{max-width:57px;height:auto;}
+    .brand-header .nav-menu-top .top-logo{max-width:150px;height:auto;}
     .brand-header .nav-menu-top .top-logo a{display:inline-block;}
     .brand-header .nav-menu-top .top-logo img{height:auto;}
     .nav-menu-top [class^="col-"]{padding-right:10px;padding-left:10px;}

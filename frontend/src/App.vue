@@ -162,12 +162,12 @@
       Log
     },
     async created() {
-      document.title = "WebFTP UOC";
+      document.title = "WebFTP Gencat";
       this.config = await this.$getRequest(endpoint.get() + "getconfig/?");
     },
     async beforeMount(){
       this.stage = this.$getStage();
-      this.currentDir = decodeURI(window.location.pathname).replace(/^\//,'').replace(/^campus/, 'webftp-protected-files-'+this.stage).replace(/^public/,'webftp-files-'+this.stage);              
+      this.currentDir = decodeURI(window.location.pathname).replace(/^\//,'').replace(/^protected/, 'webftp-protected-files-'+this.stage).replace(/^public/,'webftp-files-'+this.stage);              
     },
     methods : {
       checkIfRoot() {

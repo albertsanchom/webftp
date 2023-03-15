@@ -8,7 +8,7 @@ utilities.install = function (app) {
     if(this.stage){
       return this.stage;
     }
-    const found = window.location.host.match(/(?:.*)\.(.*)\.(?:uoc.edu)/);
+    const found = window.location.host.match(/(?:.*)\.(.*)\.(?:gencat.cat)/);
     this.stage = found ? found[1] : 'pro';
     return this.stage;
   }
