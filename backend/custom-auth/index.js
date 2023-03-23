@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jose = require('jose')
 const s3select = require("./s3select");
 
 const _BUCKET = process.env.BUCKET || "";
@@ -58,12 +58,19 @@ module.exports.handler = async (event, context, callback) => {
   }
 
   try{
-    // Verify JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    let user = decoded["urn:oid:0.9.2342.19200300.100.1.3"];
-    if(!user && decoded["sub"]){ //campusJWT
-      const sub = JSON.parse(decoded.sub);
-      user = sub.mail;      
+    let user = null;
+    const alg = 'RS256'
+    let x509 = process.env.OID_PUBLIC_x509;
+    const publicKey = await jose.importX509(x509, alg)
+  
+    try{
+      const { payload, protectedHeader } = await jose.jwtVerify(token, publicKey, {
+        issuer: process.env.ISSUER,
+        audience: process.env.OID_CLIENTID,
+      })
+      user = payload.email;
+    }catch(e){
+      return ('Unauthorized ', e.message); // Return a 401 Unauthorized response
     }
 
     const permissions = await getPermissions(user);
@@ -75,4 +82,4 @@ module.exports.handler = async (event, context, callback) => {
   }catch(e) {
     return ('Unauthorized ', e.message); // Return a 401 Unauthorized response
   }
-}; 
+};

@@ -1,111 +1,79 @@
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
+const cfcookies = require('./utils/cookie-signer');
 
-module.exports = function (app, config, passport) {
+module.exports = function (app, openid, config) {
 
-	//Ensures user auth or redirects to login
-	function ensureAuthenticated(req, res, next) {
-		if (req.isAuthenticated()){
-			return next();
-		} 
+	app.get(config.api_path+"/setCFCookies*", openid.requiresAuth(), async function(req, res, next){
+		const cookies = await cfcookies.sign();
+		const hash = cookies.hash;
 
-		res.cookie('url', req.originalUrl, { httpOnly: true, secure: true });
-		return res.redirect(config.api_path+"/login");
-	}
+		const authorized = true;
 
-	function checkHost(req, res, next){
-		
-		if(!req.query.referer || req.query.referer.length===0){
-			req.query.referer = [req.cookies.referer]; 
-		}
-
-		if(config.domains.includes(req.query.referer) || req.query.referer===config.saml.idp_host){
-			return next();
-		}
-
-		for(let i=0,z=config.patterns.length;i<z;i++){
-			if(config.patterns[i].test(req.query.referer)){
-				return next();
+		if(authorized){
+			for(var k in hash){
+				res.cookie(k, hash[k], {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': cookies.expires});
 			}
-		}		
-
-		return res.send("host not allowed");
-	}
-
-	//redirects to saved url when IdP call login callback or to cloudfront redirector html page
-	app.get(config.api_path+'/redirect', function(req, res, next){
-		var urlCookie = req.cookies.url;
-		//var stage = config.stage;
-
-		/*if(urlCookie && (urlCookie.indexOf("http://")>-1 || urlCookie.indexOf("https://"))>-1){
-			stage = "";
-		}*/
-
-		var redirect2url = /*stage +*/ (urlCookie?urlCookie:"/");
-		res.clearCookie("url");
-		
-		if(redirect2url){
-			res.redirect(redirect2url);
 		}else{
-			res.status(404).send("not found");
+			res.clearCookie("connect.sid");
 		}
+
+		const redirect = req.query.redirect?req.query.redirect:'/';
+		res.redirect(redirect);
 	});
 
-	//triggers login
-	app.get(config.api_path+'/login', passport.authenticate('saml', {failureRedirect: config.api_path+'/login'}));
-
-	//callback for login 
-	app.post(config.api_path+'/login/callback', passport.authenticate('saml', {successRedirect: config.api_path+'/redirect', failureRedirect: config.api_path+'/'}));
-
-	//profile
-	app.get(config.api_path+'/profile', ensureAuthenticated, function(req, res){
-		if(req.user){
-			res.jsonp(req.user.profile);
-		}else{
-			res.status(403).send("forbidden");
-		}
-	});
+	const testContent = function(str){
 	
-	//get JWT token
-	app.get(config.api_path+"/getJWT*", checkHost, ensureAuthenticated, function(req, res, next){
-		var object2Sign = {};
+		return `
+			<html>
+				<body>
+					<h1>${str}</h1>
+					<a href="/public">Públic</a><br />
+					<a href="/private">Private content</a><br />
+					<a href="/profile">Perfil</a><br />
+					<a href="/fetch">Test fetch profile</a><br />
+					<a href="/setCFCookies">Set Cloudfront Cookies</a>
+				</body>
+			</html>
+		`
+	};
 
-		for(var i=0,z=config.jwt_saml_profile.length;i<z;i++){
-			object2Sign[config.jwt_saml_profile[i]] = req.user.profile[config.jwt_saml_profile[i]];
-		}
-		
-		var token = jwt.sign(object2Sign, config.jwt_secret, { expiresIn: config.jwt_ttl });
-
-		const referer = req.query.referer===config.saml.idp_host?req.cookies.referer:req.query.referer;
-
-		const script = `
-			<script>
-			(function() {
-				window.opener.postMessage(
-					'${token}',
-					'https://${referer}'
-				);
-			})()
-			</script>
-		`;
-		res.send(script);	
+	app.get(config.api_path+'/', function(req, res, next){
+		res.send(testContent("Hello world"));		
 	});
 
-	//sets cookie JWT token
-	app.get(config.api_path+"/setCookieJWT*", ensureAuthenticated, function(req, res, next){
-		var object2Sign = {};
-
-		for(var i=0,z=config.jwt_saml_profile.length;i<z;i++){
-			object2Sign[config.jwt_saml_profile[i]] = req.user.profile[config.jwt_saml_profile[i]];
-		}
-		
-		var token = jwt.sign(object2Sign, config.jwt_secret, { expiresIn: config.jwt_ttl });
-
-		const referer = req.cookies.origin;
-		
-		res.cookie('Authorization', token, { httpOnly: true, secure: true, sameSite: 'strict' });
-		res.clearCookie("origin");
-
-		res.redirect(referer);
+	app.get(config.api_path+'/public', function(req, res, next){
+		res.send(testContent("Public"));		
 	});
+
+	app.get(config.api_path+'/private', openid.requiresAuth(), async function(req, res, next){
+		res.send(testContent("Private"));		
+	});
+
+	app.get(config.api_path+'/fetch', function(req, res, next){
+		res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
+		res.send(
+			testContent("Fetch") +
+			`
+				<script>
+					(async () => { 
+						try{
+							const response = await fetch("/profile");
+							console.log("----> ", response.ok)
+							if(response.ok){
+								let json = await response.json();
+								document.body.innerHTML = JSON.stringify(json);
+							}else{
+								alert("HTTP-Error: " + response.status);
+							}
+						}catch(e){
+							window.location.replace("/auth?redirect=/fetch");
+							return;
+						}
+					})();
+				</script>
+			`
+		);		
+	});
+
 
 };
