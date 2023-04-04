@@ -1,6 +1,5 @@
 .secrets
 node_modules
-package-lock.json
 setup.demo.json
 yarn*
 .env
