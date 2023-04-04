@@ -52,9 +52,9 @@ export AWS_SESSION_TOKEN="\<token\>"
 ```json
 {
   "ci": "webftp",
-  "UOCEnv": "<env>",
-  "Departament": "uocit",
-  "Programa": "TECNO",
+  "Env": "<env>",
+  "CodiEnt": "<codiEnt>",
+  "Lot": "<lot>",
   "IDP_HOST": "<host>",
   "API_PATH": "/api",
   "DOMAIN": "<domain>",

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
-                     validUntil="2021-05-26T12:14:17Z"
+                     validUntil="2023-05-26T12:14:17Z"
                      cacheDuration="PT604800S"
-                     entityID="saml-jwt-{issuer}-{stage}">
+                     entityID="saml-jwt-webftp-dev">
     <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
         <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
         <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-                                     Location="https://{domain}{api_path}/login/callback"
+                                     Location="https://d3o2ozrfxeqmbx.cloudfront.net/api/login/callback"
                                      index="1" />
 
     </md:SPSSODescriptor>

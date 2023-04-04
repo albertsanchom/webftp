@@ -4,6 +4,7 @@ package-lock.json
 setup.demo.json
 yarn*
 .env
+env
 .serverless
 *sp-metadata.xml
 http-server

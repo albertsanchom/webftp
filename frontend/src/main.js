@@ -4,6 +4,7 @@ import App from './App.vue'
 import '@fortawesome/fontawesome-free/css/all.css'
 import utilities from './services/utilities'
 import VueClipboard from 'vue-clipboard2'
+//import { jwtDecode } from 'jwt-js-decode';
 
 const i18n = createI18n({
   allowComposition: true, // you need to specify that!
@@ -89,4 +90,9 @@ const i18n = createI18n({
    } 
 })
 
-createApp(App).use(utilities).use(i18n).use(VueClipboard).mount('#app');
+createApp(App)
+  .use(utilities)
+  .use(i18n)
+//  .use(jwtDecode)
+  .use(VueClipboard)
+  .mount('#app');

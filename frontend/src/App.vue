@@ -151,7 +151,12 @@
         fetchError : false,
         folderSearch : true
       }
-    },
+    },/*
+    mounted() {
+      let jwtJsDecodeScript = document.createElement('script')
+      jwtJsDecodeScript.setAttribute('src', 'https:////unpkg.com/jwt-js-decode@1.5.1/dist/jwt-js-decode.pkg.min.js')
+      document.head.appendChild(jwtJsDecodeScript);
+    },*/
     components: {
       Header,
       Login,

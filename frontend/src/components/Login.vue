@@ -2,7 +2,7 @@
   <section id="loginContainer" v-if="!isLogged">
   <div class="type-1">
       <div>
-          <a href="/api/getJWT" id="login" class="btn btn-2">
+          <a href="/api/auth" id="login" class="btn btn-2" v-on:click="doLogin()">
               <span class="txt">{{ $t('login') }}</span>
               <span class="round"><i class="fa fa-chevron-right"></i></span>
           </a>
@@ -100,9 +100,10 @@
 </style>
 
 <script>
-  import endpoint from '@/assets/js/endpoint.js'
+  //import endpoint from '@/assets/js/endpoint.js'
+  import { jwtDecode } from 'jwt-js-decode';
 
-  const decoder = (base64url) => {
+  /*const decoder = (base64url) => {
     let json_string;
     try {
       const base64 = base64url.replace('-', '+').replace('_', '/');
@@ -115,7 +116,7 @@
       json_string = "Bad Section.\nError: " + err.message;
     }
     return json_string;
-  }
+  }*/
 
   //gets cookie
   const getCookieValue = (name) => {
@@ -131,9 +132,9 @@
     mounted: function () {
       const that = this;
 
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const token = urlParams.get('token');
+      //const queryString = window.location.search;
+      //const urlParams = new URLSearchParams(queryString);
+      //const token = urlParams.get('token');
 
       let token_ttl=window.localStorage.getItem("token_ttl");
       //let token_ttl = -1;
@@ -142,12 +143,13 @@
       if(campusJWT){ // if token from campus exists tries to use it
         window.localStorage.setItem("token", campusJWT);
         try{
-          campusJWT = JSON.parse(decoder(campusJWT.split(".")[1]));
+          campusJWT = jwtDecode(campusJWT).payload;
+          console.log(campusJWT);
+          //campusJWT = JSON.parse(decoder(campusJWT.split(".")[1]));
           token_ttl = campusJWT.exp;
           window.localStorage.setItem("token_ttl", token_ttl);
           //campusJWT = JSON.parse(campusJWT.sub);
-          console.log("campusJWT:" + campusJWT);
-          window.localStorage.setItem("token_name", campusJWT["urn:oid:2.5.4.42"]);
+          window.localStorage.setItem("token_name", campusJWT.given_name);
         }catch(e){
           console.error("token error");
         }
@@ -164,16 +166,8 @@
     },
     methods: {
       doLogin() {
-        const w=430, h=430;
-        const dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-        const dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
-        const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-        const left = ((width / 2) - (w / 2)) + dualScreenLeft;
-        const top = ((height / 2) - (h / 2)) + dualScreenTop;
-        window.LoginWindow = window.open(endpoint.get()+"getJWT", "Login", 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-        if (window.focus) {
-          window.LoginWindow.focus();
+        if(window.location.pathname.toString().length>"1"){
+            window.location.replace("/api/auth?redirect="+window.location.toString());
         }
       },
       emitLogged(data) {
