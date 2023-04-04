@@ -9,12 +9,12 @@ on:
 
 jobs:
   cicd-application:
-    name: Execute AWS CodePipeline
+    name: Sync S3
     runs-on: ubuntu-latest
     environment: Demo
     defaults:
       run:
-        working-directory: ./petclinic
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v3
         with:
@@ -29,18 +29,3 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-
-      - name: Sync up to CodeCommit
-        uses: tsgit18/sync-up-to-codecommit-action@v1.0.6
-        with:
-          repository_name: petclinic
-          aws_region: eu-west-1
-
-      - name: Trigger AWS CodePipeline
-        uses: zulhfreelancer/aws-codepipeline-action@v1.0.7
-        if: github.ref == 'refs/heads/master'
-        with:
-          aws-region: "eu-west-1"
-          aws-access-key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          pipeline-name: "petclinic-master-Pipeline"

@@ -15,6 +15,9 @@ jobs:
       matrix:
         node-version: [16.x]
     environment: Demo
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
     - uses: actions/checkout@v3
 
