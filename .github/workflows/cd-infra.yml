@@ -1,14 +1,11 @@
 on:
   workflow_dispatch:
-  push:
-    branches: [master]
-    paths: [ 'backend/serverless.yml' ]
-  pull_request:
-    branches: [master]
-    paths: [ 'backend/serverless.yml' ]
-
-# env:
-#   BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
+  # push:
+  #   branches: [main]
+  #   paths: [ 'backend/serverless.yml' ]
+  # pull_request:
+  #   branches: [main]
+  #   paths: [ 'backend/serverless.yml' ]
 
 jobs:
   deploy-iac:
@@ -33,7 +30,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    
+
     - name: serverless deploy
       uses: serverless/github-action@v3.1
       with:

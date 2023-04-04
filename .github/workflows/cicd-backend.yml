@@ -1,11 +1,11 @@
 on:
   workflow_dispatch:
   push:
-    branches: [master]
-    paths: [ 'petclinic/**' ]
+    branches: [main]
+    paths: [ 'backend/**' ]
   pull_request:
-    branches: [master]
-    paths: [ 'petclinic/**' ]
+    branches: [main]
+    paths: [ 'backend/**' ]
 
 jobs:
   cicd-application:
