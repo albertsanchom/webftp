@@ -1,44 +1,31 @@
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [ 'backend/**' ]
-  pull_request:
-    branches: [main]
-    paths: [ 'backend/**' ]
+  # push:
+  #   branches: [main]
+  #   paths: [ 'backend/**' ]
+  # pull_request:
+  #   branches: [main]
+  #   paths: [ 'backend/**' ]
 
 jobs:
-  deploy-iac:
-    name: Deploy IaC
+  cicd-application:
+    name: Deploy Lambdas
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
     environment: Demo
     defaults:
       run:
         working-directory: ./backend
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+           fetch-depth: 0
 
-    - name: Configure AWS Credentials Action For GitHub Actions
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1 
+      #- name: Fix detected dubious ownership in repository at '/github/workspace' error
+      #  run: git config --global --add safe.directory /github/workspace
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-
-    - name: serverless deploy
-      env:
-        STAGE: ${{ vars.STAGE }}
-      uses: serverless/github-action@v3.1
-      with:
-        args: -c "cd ./backend && serverless deploy --stage $STAGE"
-        entrypoint: /bin/sh
-      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1

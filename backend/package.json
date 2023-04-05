@@ -2,6 +2,11 @@
   "name": "webftp-backend",
   "version": "0.0.1",
   "description": "Lambdas for webftp backend",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.289.0",
+    "@aws-sdk/s3-presigned-post": "^3.306.0",
+    "@aws-sdk/s3-request-presigner": "^3.306.0"
+  },
   "scripts": {
     "build": "npm --prefix ./custom-auth install ./custom-auth && npm --prefix ./login install ./login"
   }
