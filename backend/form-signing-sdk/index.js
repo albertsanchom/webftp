@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
 
     const params = {
         Bucket: check.bucket,
-        Key: "",
+        Key: check.key,
         Conditions: [
      	   ["starts-with", "$key", check.key],
  	       {"bucket": check.bucket},
