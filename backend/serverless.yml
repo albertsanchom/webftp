@@ -520,6 +520,7 @@ functions:
       OID_PUBLIC_x509: ${self:custom.oidPublicX509}
       ISSUER: ${self:custom.issuer}
       OID_CLIENTID: ${self:custom.oidClientId}
+      REGION: ${self:provider.region}
 
   getConfig:
     handler: get-config/index.handler
