@@ -14,9 +14,6 @@ jobs:
       matrix:
         node-version: [16.x]
     environment: Demo
-    defaults:
-      run:
-        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v3
 
@@ -33,3 +30,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: cd ./frontend && npm ci && npm run build
 
+      - name: Deploy static site to S3 bucket
+        env:
+          STAGE: ${{ vars.STAGE }}
+        run: aws s3 sync ./frontend/dist/ s3://webftp-web-$STAGE --delete && aws s3 cp ./admin/error/index.html s3://webftp-protected-files-$STAGE/error/index.html
