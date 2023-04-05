@@ -19,13 +19,13 @@ exports.handler = async (event, context) => {
 
     const params = {
         Bucket: check.bucket,
-        Key: "${filename}",
+        Key: (check.key ? check.key + "/" : "") + '${filename}',
         Conditions: [
      	   ["starts-with", "$key", check.key],
  	       {"bucket": check.bucket},
            ["starts-with", "\$Content-Type", ""],
         ],
-        Expiration: expires
+        Expires: expires
     };
     
     const { url, fields } = await createPresignedPost(client, params);    
