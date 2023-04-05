@@ -36,12 +36,18 @@ exports.handler = async (event, context) => {
     let data = await client.send(command);
 
     if(check.user){
-        console.log(JSON.stringify(data));
-        for(let i=0,z=data.Contents.length;i<z;i++){
-            data.Contents[i].Key = utils.removeDoubleSlash(data.Contents[i].Key.replace(check.user+"/",""));
+        if(data && data.Contents && data.Contents.length){
+            for(let i=0,z=data.Contents.length;i<z;i++){
+                data.Contents[i].Key = utils.removeDoubleSlash(data.Contents[i].Key.replace(check.user+"/",""));
+            }
         }
-        for(let i=0,z=data.CommonPrefixes.length;i<z;i++){
-            data.CommonPrefixes[i].Prefix = utils.removeDoubleSlash(data.CommonPrefixes[i].Prefix.replace(check.user+"/",""));
+        if(data && data.CommonPrefixes && data.CommonPrefixes.length){
+            for(let i=0,z=data.CommonPrefixes.length;i<z;i++){
+                data.CommonPrefixes[i].Prefix = utils.removeDoubleSlash(data.CommonPrefixes[i].Prefix.replace(check.user+"/",""));
+            }
+        }
+        if(!data){
+            data = {};
         }
         data.Prefix = utils.removeDoubleSlash(data.Prefix.replace(check.user+"/",""));
         data.user = check.user;
