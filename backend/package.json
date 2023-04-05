@@ -8,6 +8,7 @@
     "@aws-sdk/s3-request-presigner": "^3.306.0"
   },
   "scripts": {
-    "build": "npm --prefix ./custom-auth install ./custom-auth && npm --prefix ./login install ./login"
+    "build": "npm --prefix ./custom-auth install ./custom-auth && npm --prefix ./login install ./login",
+    "build-ci": "npm --prefix ./custom-auth ci ./custom-auth && npm --prefix ./login ci ./login"
   }
 }
