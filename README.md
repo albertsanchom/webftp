@@ -6,7 +6,7 @@ Features:
 
 * It's possible to setup "users" and "admins". 
 
-* A **user** adds its username (email from saml response) to each key (uploading, browsing, deleting...) . An **admin** can see everything under a bucket or a folder. See [permissions.csv](data/permissions.csv).
+* A **user** adds its username (email from saml response) to each key (uploading, browsing, deleting...) . An **admin** can see everything under a bucket or a folder. See [permissions.csv](authz/permissions.csv).
     - You need a Custom Authorizer for your API Gateway to validate JWT Token (sample here [backend/custom-auth/index.js](backend/custom-auth/index.js)). 
     - Our [custom authorizer](backend/custom-auth/index.js) queries with S3 Select the CSV and retrieves the permissions for a user and adds the buckets, folders and roles to the context. 
 
@@ -129,16 +129,14 @@ These specific environment files needed for deploy must be placed in ~/.config/s
 
 * Frontend is Vue based (v3). Follow the [Getting Started](https://vuejs.org/guide/introduction.html)
 
-## Simple checks for UOC WEBFTP
+## Simple checks for WEBFTP
 
 ### App
 
 These are a simple checks to validate that the application is up and running:
 
 * Access the config service:
-    - TEST -> https://ftp.test.uoc.edu/api/getconfig
-    - PRE ->  https://ftp.pre.uoc.edu/api/getconfig
-    - PRO ->  https://ftp.uoc.edu/api/getconfig
+    - https://[your domain]/api/getconfig
 
 The result must be a json like this:
 
@@ -152,19 +150,13 @@ The result must be a json like this:
 ```
 
 * Validate login and permissions:
-    - TEST -> https://ftp.test.uoc.edu/
-    - PRE ->  https://ftp.pre.uoc.edu/
-    - PRO ->  https://ftp.uoc.edu/
+    - https://yourdomain/
 
-Enter UOC credentials, if you have permissions in some data bucket you will see the logical name of this bucket (Ex. campus, public,...) and navigate around the folders, upload/download/delete files, ... Otherwise a "you don't have permissions" will be showed
+Update permissions.csv and enter your credentials and. If you have permissions in some data bucket you will see the logical name of this bucket (Ex. protected, public,...) and navigate around the folders, upload/download/delete files, ... Otherwise a "you don't have permissions" will be shown.
 
 ### CDN
 
-#### Protected content (requires "Campus Cloudfront Signed Cookies")
-
-- TEST -> https://protected-content.ftp.test.uoc.edu/
-- PRE ->  https://protected-content.ftp.pre.uoc.edu/
-- PRO ->  https://protected-content.ftp.uoc.edu/
+#### Protected content (requires "Signed Cookies")
 
 The result will be the following:
 
@@ -226,7 +218,6 @@ Setup CORS in bucket
 # TODO
 
 * Implement routes to share access to path inside WebFTP
-* Social Login
 * Quotas
 * New role superadmin --> hability to "archive", send to glacier a folder
 

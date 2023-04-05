@@ -36,6 +36,7 @@ exports.handler = async (event, context) => {
     let data = await client.send(command);
 
     if(check.user){
+        console.log(JSON.stringify(data));
         for(let i=0,z=data.Contents.length;i<z;i++){
             data.Contents[i].Key = utils.removeDoubleSlash(data.Contents[i].Key.replace(check.user+"/",""));
         }
