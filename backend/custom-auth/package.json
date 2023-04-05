@@ -1,0 +1,9 @@
+{
+    "name": "lamba-custom-auth",
+    "version": "0.0.1",
+    "description": "",
+    "main": "app.js",
+    "dependencies": {
+      "jose": "^4.13.1"
+    }
+  }

@@ -9,7 +9,7 @@
     "jose": "^4.13.1"
   },
   "scripts": {
-    "build": "npm install && npm --prefix ./login install ./login",
-    "build-ci": "npm ci && npm --prefix ./login ci ./login"
+    "build": "npm install && npm --prefix ./custom-auth install ./custom-auth && npm --prefix ./login install ./login",
+    "build-ci": "npm ci && npm --prefix ./custom-auth ci ./custom-auth && npm --prefix ./login ci ./login"
   }
 }
