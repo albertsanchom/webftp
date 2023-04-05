@@ -1,0 +1,19 @@
+{
+    "ci": "webftp",
+    "Env": "demo",
+    "CodiEnt": "CTT",
+    "Lot": "XXX",
+    "IDP_HOST": "preproduccio.autenticaciogicar4.extranet.gencat.cat",
+    "API_PATH": "/api",
+    "DOMAIN": "d3o2ozrfxeqmbx.cloudfront.net",
+    "DOMAIN_CERT_ARN": "<cert-arn>",
+    "PUBLIC_CDN_DOMAIN": "dkekn57nyaqis.cloudfront.net",
+    "PUBLIC_CDN_DOMAIN_CERT_ARN": "<cert-arn>",
+    "PROTECTED_CDN_DOMAIN": "dyblmpogkib8u.cloudfront.net",
+    "PROTECTED_CDN_DOMAIN_CERT_ARN": "<cert-arn>",
+    "ISSUER": "https://preproduccio.endpointma.autenticaciogicar4.extranet.gencat.cat/realms/gicarcpd4",
+    "BASEURL": "https://d3o2ozrfxeqmbx.cloudfront.net",
+    "OID_REDIRECTURI_PATH": "/login/callback",
+    "COOKIES_TTL": 3600,
+    "AWS_SIGNEDCOOKIES_TTL": 3600
+}
