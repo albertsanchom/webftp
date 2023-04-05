@@ -1,0 +1,44 @@
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  #   paths: [ 'backend/serverless.yml' ]
+  # pull_request:
+  #   branches: [main]
+  #   paths: [ 'backend/serverless.yml' ]
+
+jobs:
+  deploy-iac:
+    name: Deploy IaC
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    environment: Demo
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials Action For GitHub Actions
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1 
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+
+    - name: serverless deploy
+      uses: serverless/github-action@v3.1
+      with:
+        args: -c "cd ./backend && serverless deploy"
+        entrypoint: /bin/sh
+      # env:
+      #   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+      

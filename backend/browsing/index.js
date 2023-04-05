@@ -1,19 +1,17 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-AWS.config.region = process.env.AWS_REGION || 'eu-west-1';
-AWS.config.signatureVersion = 'v4';
-
-const s3 = new AWS.S3();
 const utils = require('../utils');
+const { S3Client, ListObjectsV2Command } = require("@aws-sdk/client-s3"); 
+
+const client = new S3Client({'region' : process.env.AWS_REGION || 'eu-west-1'});
 
 exports.handler = async (event, context) => {
     const check = utils.checkAuth(event);
+
     let folderSearch = true;
     if(event.queryStringParameters && event.queryStringParameters.folderSearch && event.queryStringParameters.folderSearch==="false"){
       folderSearch = false;
     }
-
 
     if(check.error){
        return utils.getResponse(check.error, null, 401);
@@ -22,8 +20,6 @@ exports.handler = async (event, context) => {
     if(check.data){ //home
         return utils.getResponse(null, JSON.stringify(check.data));
     }
-
-    //await utils.setCredentials(AWS, process.env.ROLE);
 
     let params = {
         Bucket: check.bucket,
@@ -36,7 +32,8 @@ exports.handler = async (event, context) => {
         params.ContinuationToken = event.queryStringParameters.continuationToken;
     }
 
-    let data = await s3.listObjectsV2(params).promise();
+    const command = new ListObjectsV2Command(params);
+    let data = await client.send(command);
 
     if(check.user){
         for(let i=0,z=data.Contents.length;i<z;i++){

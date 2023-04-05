@@ -1,16 +1,21 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
 const utils = require('../utils');
 
+const { S3Client, ListObjectsV2Command, DeleteObjectsCommand } = require("@aws-sdk/client-s3"); 
+
+const client = new S3Client({'region' : process.env.AWS_REGION || 'eu-west-1'});
+
 async function deleteFromS3(bucket, path) {
+
   const listParams = {
     Bucket: bucket,
     Prefix: path
   };
 
-  const listedObjects = await s3.listObjectsV2(listParams).promise();
+  let command = new ListObjectsV2Command(listParams);
+  const listedObjects = await client.send(command);
+
   if (listedObjects.Contents.length === 0) return;
 
   const deleteParams = {
@@ -22,7 +27,8 @@ async function deleteFromS3(bucket, path) {
     deleteParams.Delete.Objects.push({ Key });
   });
 
-  const deleteResult = await s3.deleteObjects(deleteParams).promise();
+  command = new DeleteObjectsCommand(deleteParams);
+  const deleteResult = await client.send(command);
 
   if (listedObjects.IsTruncated && deleteResult){
     await deleteFromS3(bucket, path);
@@ -49,7 +55,6 @@ exports.handler = async (event, context) => {
     return utils.getResponse("no keys", null, 400);
   }
 
-  //await utils.setCredentials(AWS, process.env.ROLE);
   await Promise.all(keys.map(async(key) => {
       const newKey = utils.adaptKey(event, key, check.user);
       let testKey;

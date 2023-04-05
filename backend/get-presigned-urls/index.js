@@ -1,7 +1,10 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
+
+const client = new S3Client({'region' : process.env.AWS_REGION || 'eu-west-1'});
+
 const utils = require('../utils');
 
 exports.handler = async (event, context) => {
@@ -24,21 +27,20 @@ exports.handler = async (event, context) => {
         return utils.getResponse("no keys", null, 400);
     }
 
-    //await utils.setCredentials(AWS, process.env.ROLE);
-   
     let urls = [];
     const signedUrlExpireSeconds = 60 * 5;
     
+    let command, url;
+
     for(let key of keys) {
-        //var val = user + '/' + key;
         let val = utils.adaptKey(event, key, check.user);        
 
-        const url = s3.getSignedUrl('getObject', {
+        command = new GetObjectCommand({
             Bucket: check.bucket,
-            Key: val,
-            Expires: signedUrlExpireSeconds
+            Key: val
         });
-        
+        url = await getSignedUrl(client, command, { expiresIn: signedUrlExpireSeconds });
+
         urls.push(url);
     }
     
