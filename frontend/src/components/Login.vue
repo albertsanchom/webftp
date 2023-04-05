@@ -138,18 +138,18 @@
 
       let token_ttl=window.localStorage.getItem("token_ttl");
       //let token_ttl = -1;
-      //let campusJWT = token;
-      let campusJWT = getCookieValue('campusJWT');
-      if(campusJWT){ // if token from campus exists tries to use it
-        window.localStorage.setItem("token", campusJWT);
+      //let oidc_token = token;
+      let oidc_token = getCookieValue('oidc_token');
+      if(oidc_token){ // if token from campus exists tries to use it
+        window.localStorage.setItem("token", oidc_token);
         try{
-          campusJWT = jwtDecode(campusJWT).payload;
-          console.log(campusJWT);
-          //campusJWT = JSON.parse(decoder(campusJWT.split(".")[1]));
-          token_ttl = campusJWT.exp;
+          oidc_token = jwtDecode(oidc_token).payload;
+          console.log(oidc_token);
+          //oidc_token = JSON.parse(decoder(oidc_token.split(".")[1]));
+          token_ttl = oidc_token.exp;
           window.localStorage.setItem("token_ttl", token_ttl);
-          //campusJWT = JSON.parse(campusJWT.sub);
-          window.localStorage.setItem("token_name", campusJWT.given_name);
+          //oidc_token = JSON.parse(oidc_token.sub);
+          window.localStorage.setItem("token_name", oidc_token.given_name);
         }catch(e){
           console.error("token error");
         }

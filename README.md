@@ -26,10 +26,8 @@ Features:
 
 * Files can be shared: you can put a cloudfront distribution over S3 bucket and get the link to that file. 
 
-  * If a bucket is private to Campus UOC, you can use "Campus Cloudfront Signed Cookies" to allow access to that bucket (only need to trust NPLIN account as signer)
+  * If a bucket is private, you can use "Signed Cookies" to allow access to that bucket.
   * For public buckets no authentication is required to access files
-
-* Access can be allowed through "campusJWT" cookie or with SAML login from WebFTP application.
 
 ## Architecture
 
@@ -78,9 +76,6 @@ These specific environment files needed for deploy must be placed in ~/.config/s
 
         $ chmod +x deploy.sh && sh deploy.sh --environment=<env>
 
-* If you are using https://samltest.id, follow this additional steps:
-    * Execute [STAGE=$ENVIRONMENT node setup] It will modify some files in order to make all work. Go to https://samltest.id/upload.php and upload manually [docs/sp-metadata.xml](docs/sp-metadata.xml). 
-
 * For development, run your server and try
 
         $ npm run serve --prefix=frontend
@@ -109,15 +104,6 @@ These specific environment files needed for deploy must be placed in ~/.config/s
         $ aws s3 sync ./frontend/dist s3://webftp-web-<env>
         $ aws s3 cp admin/error/index.html s3://webftp-protected-files-<env>/error/index.html
 
-If you are using https://samltest.id, follow this additional steps:
-
-* Update your [sp-metadata.xml](docs/sample-sp-metadata.xml) with:
-    * your issuer
-    * your domain
-    * your api path
-
-* Upload this file to https://samltest.id/upload.php
-
 ## Sample interface
 
 ![screen](docs/screen-1.png)
@@ -135,7 +121,7 @@ If you are using https://samltest.id, follow this additional steps:
 
 1. [GetConfig](backend/get-config/index.js): function to get cdn domain vs buckets setup.
 
-1. [Login](backend/login/app.js): in this case SAML based to generate a JWT token.
+1. [Login](backend/login/app.js): OIDC/OAuth2 based to generate a JWT token (oidc_token = token_id).
 
 1. [Custom authorizer](backend/custom-auth/index.js): validates JWT token and adds extra permissions from [CSV](data/permissions.csv)
 

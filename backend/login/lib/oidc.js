@@ -26,8 +26,7 @@ module.exports = function (app, config){
                 absoluteDuration: config.cookies_ttl,
             },       
 			afterCallback: (req, res, session) => {
-				res.cookie('token', session.id_token, {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
-				res.cookie('campusJWT', session.id_token, {'path': '/', 'httpOnly': false, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
+				res.cookie('oidc_token', session.id_token, {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
 				return session;
 			},				   
 		})
