@@ -1,0 +1,53 @@
+service: webftp-config
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'demo'}
+  region: ${env:region, 'eu-west-1'}
+  stackTags:
+    ci: ${file(env/${self:service}.${self:provider.stage}.json):ci}
+    Env: ${file(env/${self:service}.${self:provider.stage}.json):Env}
+    CodiEnt: ${file(env/${self:service}.${self:provider.stage}.json):CodiEnt}
+    Lot: ${file(env/${self:service}.${self:provider.stage}.json):Lot}
+    name: ${self:service}
+
+resources:
+  Resources:    
+    oidClientId:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/oidClientId
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):OID_CLIENTID}
+    oidClientSecret:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/oidClientSecret
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):OID_CLIENTSECRET}
+    cookiesSecret:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/cookiesSecret
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):COOKIES_SECRET}
+    oidPublicX509:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/oidPublicX509
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):OID_PUBLIC_x509}
+    awsKeyPairId:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/awsKeyPairId
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):AWS_KEYPAIRID}
+    awsPrivateKey:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/awsPrivateKey
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):AWS_PRIVATEKEY}

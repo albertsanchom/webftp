@@ -3,7 +3,7 @@ node_modules
 setup.demo.json
 yarn*
 .env
-env/webftp.dev.json
+env
 .serverless
 *sp-metadata.xml
 http-server

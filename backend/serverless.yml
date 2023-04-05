@@ -543,16 +543,22 @@ custom:
   #samlCert: ${ssm:/${self:provider.stage}/${self:service}/SAML_CERT}
   #jwtSecret: ${file(env/${self:service}.${self:provider.stage}.json):JWT_SECRET}
   #samlCert: ${file(env/${self:service}.${self:provider.stage}.json):SAML_CERT}
-  oidClientId: ${file(env/${self:service}.${self:provider.stage}.json):OID_CLIENTID}
-  oidClientSecret: ${file(env/${self:service}.${self:provider.stage}.json):OID_CLIENTSECRET}
-  oidPublicX509: ${file(env/${self:service}.${self:provider.stage}.json):OID_PUBLIC_x509}
+  #oidClientId: ${file(env/${self:service}.${self:provider.stage}.json):OID_CLIENTID}
+  oidClientId: ${ssm:/${self:service}-config/${self:provider.stage}/oidClientId}
+  #oidClientSecret: ${file(env/${self:service}.${self:provider.stage}.json):OID_CLIENTSECRET}
+  oidClientSecret: ${ssm:/${self:service}-config/${self:provider.stage}/oidClientSecret}
+  #oidPublicX509: ${file(env/${self:service}.${self:provider.stage}.json):OID_PUBLIC_x509}
+  oidPublicX509: ${ssm:/${self:service}-config/${self:provider.stage}/oidPublicX509}
   oidRedirectUriPath: ${file(env/${self:service}.${self:provider.stage}.json):OID_REDIRECTURI_PATH}
   issuer: ${file(env/${self:service}.${self:provider.stage}.json):ISSUER}
-  cookiesSecret: ${file(env/${self:service}.${self:provider.stage}.json):COOKIES_SECRET}
+  #cookiesSecret: ${file(env/${self:service}.${self:provider.stage}.json):COOKIES_SECRET}
+  cookiesSecret: ${ssm:/${self:service}-config/${self:provider.stage}/cookiesSecret}
   cookiesTtl: ${file(env/${self:service}.${self:provider.stage}.json):COOKIES_TTL}
   baseUrl: ${file(env/${self:service}.${self:provider.stage}.json):BASEURL}
-  awsKeyPairId: ${file(env/${self:service}.${self:provider.stage}.json):AWS_KEYPAIRID}
-  awsPrivateKey: ${file(env/${self:service}.${self:provider.stage}.json):AWS_PRIVATEKEY}
+  #awsKeyPairId: ${file(env/${self:service}.${self:provider.stage}.json):AWS_KEYPAIRID}
+  awsKeyPairId: ${ssm:/${self:service}-config/${self:provider.stage}/awsKeyPairId}
+  #awsPrivateKey: ${file(env/${self:service}.${self:provider.stage}.json):AWS_PRIVATEKEY}
+  awsPrivateKey: ${ssm:/${self:service}-config/${self:provider.stage}/awsPrivateKey}
   awsSignedCookiesTtl: ${file(env/${self:service}.${self:provider.stage}.json):AWS_SIGNEDCOOKIES_TTL}
   #idpHost: ${file(env/${self:service}.${self:provider.stage}.json):IDP_HOST}
   apiPath: ${file(env/${self:service}.${self:provider.stage}.json):API_PATH, '/api'}
