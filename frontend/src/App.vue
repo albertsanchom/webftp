@@ -304,7 +304,7 @@
             let formData;
             let path;
             for(let i=0,z=files.length;i<z;i++){
-              path = files[i].path.replace(files[i].name,"").slice(1);
+              path = files[i].path.replace(new RegExp(files[i].name + '$'),"").slice(1);
               this.log.push({"name": files[i].name, "path": path, "uploading" : true, "randomKey" : +new Date});
               formData = this.$generateFormData(signedForm, files[i].binary, path);
               await this.$postRequest(signedForm.endpoint, formData);

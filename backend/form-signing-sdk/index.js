@@ -19,8 +19,7 @@ exports.handler = async (event, context) => {
 
     const params = {
         Bucket: check.bucket,
-        //Key: (check.key ? check.key + "/" : "") + '${filename}',
-        Key: check.key + '/${filename}',
+        Key: (check.key ? check.key + "/" : "") + '${filename}',
         Conditions: [
      	   ["starts-with", "$key", check.key],
  	       {"bucket": check.bucket},
@@ -33,8 +32,7 @@ exports.handler = async (event, context) => {
 
     let formdata = {};
     formdata.endpoint = url;
-    //formdata.key = (check.key ? check.key + "/" : "") + '${filename}';
-    formdata.key = check.key + '/${filename}';
+    formdata.key = (check.key ? check.key + "/" : "") + '${filename}';
     for(let k in fields){
         formdata[k] = fields[k];
     }

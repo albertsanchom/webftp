@@ -277,7 +277,6 @@
         },
         prettyName(item, prefix) {
           item = this.$trimSlash(item);
-          console.log(item);
           if(item.indexOf("webftp-protected-files")>-1){
             //return "campus";
             return item.replace(/^webftp-protected-files-((\bdev\b)|(\btest\b)|(\bpre\b)|(\bpro\b))/,'protected');

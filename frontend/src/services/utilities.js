@@ -27,7 +27,7 @@ utilities.install = function (app) {
     for(var k in formData){
       if(["endpoint"].indexOf(k)===-1){
         if(k==="key"){
-          filename = formData[k].replace("${filename}",path+"${filename}"+((!isFolder && file.name.indexOf(".")===-1)?".xyz":""));//ads extension .xyz if no extension
+          filename = formData[k].replace("${filename}",path+"${filename}"+((!isFolder && file.name.indexOf(".")===-1)?".xyz":"")); //adds extension .xyz if no extension
           fd.append(k, filename);
         }else{
           fd.append(k, formData[k]);
