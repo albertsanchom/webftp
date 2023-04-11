@@ -4,17 +4,6 @@ const s3select = require("./s3select");
 const _BUCKET = process.env.BUCKET || "";
 const _FILE = process.env.FILE || "";
 
-
-function getAccessTokenFromCookies(cookiesArray) {
-  for (const cookieStr of cookiesArray) {
-    const cookieArr = cookieStr.split("oidc_token=");
-    if (cookieArr[1]!==null) {
-      return cookieArr[1];
-    }
-  }
-  return null;
-}
-
 const buildIAMPolicy = (userId, effect, resource, context) => {
     const policy = {
       principalId: userId,
@@ -63,8 +52,7 @@ async function getPermissions(user){
   * @throws Returns 403 if the token does not have sufficient permissions.
   */
 module.exports.handler = async (event, context, callback) => {
-  //const token = event.authorizationToken;
-  const token = getAccessTokenFromCookies(event.cookies)
+  const token = event.authorizationToken;
   if(!token){
     return ('Unauthorized ', 'No token'); // Return a 401 Unauthorized response
   }
