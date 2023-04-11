@@ -25,6 +25,9 @@ provider:
     #  Resource: "*"
   apiGateway:
     shouldStartNameWithService: true
+  httpApi:
+    cors: true
+
 
   environment:
     #ROLE: { "Fn::GetAtt" : [ "IamRoleLambdaExecution", "Arn" ] }
@@ -453,7 +456,6 @@ functions:
       - httpApi:
           path: ${self:custom.apiPath}/getfiles
           method: get
-          cors: true
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
@@ -464,7 +466,6 @@ functions:
       - httpApi:
           path: ${self:custom.apiPath}/deletekeys
           method: post
-          cors: true
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
@@ -476,7 +477,6 @@ functions:
       - httpApi:
           path: ${self:custom.apiPath}/getuploadform
           method: get
-          cors: true
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
@@ -487,7 +487,6 @@ functions:
       - httpApi:
           path: ${self:custom.apiPath}/getpresignedurls
           method: post
-          cors: true
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
@@ -498,7 +497,6 @@ functions:
       - httpApi:
           path: ${self:custom.apiPath}/{proxy+}
           method: any
-          cors: true
 
     environment:
       ALLOWED_DOMAINS: ${self:custom.domain},${self:custom.frontBucket}-${self:provider.stage}.s3-${self:provider.region}.amazonaws.com,localhost:8080
@@ -528,7 +526,6 @@ functions:
       - http:
           path: ${self:custom.apiPath}/getconfig
           method: get
-          cors: true
     environment:
       PUBLIC_DATA_BUCKET: ${self:custom.publicDataBucket}
       PROTECTED_DATA_BUCKET: ${self:custom.protectedDataBucket}
