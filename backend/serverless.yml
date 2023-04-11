@@ -450,7 +450,7 @@ functions:
   browse:
     handler: browsing/index.handler
     events:
-      - http:
+      - httpApi:
           path: ${self:custom.apiPath}/getfiles
           method: get
           cors: true
@@ -461,7 +461,7 @@ functions:
   delete:
     handler: delete-keys/index.handler
     events:
-      - http:
+      - httpApi:
           path: ${self:custom.apiPath}/deletekeys
           method: post
           cors: true
@@ -473,7 +473,7 @@ functions:
   upload:
     handler: form-signing-sdk/index.handler
     events:
-      - http:
+      - httpApi:
           path: ${self:custom.apiPath}/getuploadform
           method: get
           cors: true
@@ -484,7 +484,7 @@ functions:
   download:
     handler: get-presigned-urls/index.handler
     events:
-      - http:
+      - httpApi:
           path: ${self:custom.apiPath}/getpresignedurls
           method: post
           cors: true
@@ -495,7 +495,7 @@ functions:
   login:
     handler: login/app.handler
     events:
-      - http:
+      - httpApi:
           path: ${self:custom.apiPath}/{proxy+}
           method: any
           cors: true
