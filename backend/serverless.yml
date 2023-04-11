@@ -30,7 +30,7 @@ provider:
     authorizers:
       customAuthorizer:
         type: request
-        functionName: custom-auth
+        functionName: customAuth
         resultTtlInSeconds: 0
 
   environment:
@@ -510,7 +510,7 @@ functions:
       COOKIES_SECRET: ${self:custom.cookiesSecret}
       COOKIES_TTL: ${self:custom.cookiesTtl}
 
-  custom-auth:
+  customAuth:
     handler: custom-auth/index.handler
     environment:
       BUCKET: ${self:custom.authzBucket}
