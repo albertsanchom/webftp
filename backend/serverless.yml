@@ -494,10 +494,7 @@ functions:
   login:
     handler: login/app.handler
     events:
-      - httpApi:
-          path: ${self:custom.apiPath}/{proxy+}
-          payload: '1.0'
-          method: any
+      - httpApi: '*'
 
     environment:
       ALLOWED_DOMAINS: ${self:custom.domain},${self:custom.frontBucket}-${self:provider.stage}.s3-${self:provider.region}.amazonaws.com,localhost:8080
