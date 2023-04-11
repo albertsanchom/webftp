@@ -496,6 +496,7 @@ functions:
     events:
       - httpApi:
           path: ${self:custom.apiPath}/{proxy+}
+          payload: '1.0'
           method: any
 
     environment:
