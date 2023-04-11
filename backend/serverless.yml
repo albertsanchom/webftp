@@ -31,7 +31,7 @@ provider:
       customAuthorizer:
         type: request
         functionName: custom-auth
-        resultTtlInSeconds: 1
+        resultTtlInSeconds: 0
 
   environment:
     #ROLE: { "Fn::GetAtt" : [ "IamRoleLambdaExecution", "Arn" ] }
