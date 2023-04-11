@@ -27,7 +27,10 @@ provider:
     shouldStartNameWithService: true
   httpApi:
     cors: true
-
+    authorizers:
+      customAuthorizer:
+        type: request
+        functionName: custom-auth
 
   environment:
     #ROLE: { "Fn::GetAtt" : [ "IamRoleLambdaExecution", "Arn" ] }
