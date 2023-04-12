@@ -4,6 +4,20 @@ const s3select = require("./s3select");
 const _BUCKET = process.env.BUCKET || "";
 const _FILE = process.env.FILE || "";
 
+
+function getCookieValue(str, strCookie){
+  const name = str + "=";
+  const decodedCookies = decodeURIComponent(strCookie);
+  const arrayCookies = decodedCookies.split('; ');
+  let res = null;
+  arrayCookies.forEach(val => {
+    if (val.indexOf(name)===0){
+      res = val.substring(name.length);
+    }
+  })
+  return res;
+}
+
 const buildIAMPolicy = (userId, effect, resource, context) => {
     const policy = {
       principalId: userId,
@@ -53,7 +67,8 @@ async function getPermissions(user){
   */
 module.exports.handler = async (event, context, callback) => {
   console.log(JSON.stringify(event));
-  const token = event.authorizationToken;
+  //const token = event.authorizationToken;
+  const token = getCookie("oidc_token", event.headers.Cookie);
   if(!token){
     return ('Unauthorized ', 'No token'); // Return a 401 Unauthorized response
   }

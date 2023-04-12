@@ -457,6 +457,7 @@ functions:
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
+            type: request 
 
   delete:
     handler: delete-keys/index.handler
@@ -468,6 +469,7 @@ functions:
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
+            type: request 
     timeout: 30
 
   upload:
@@ -480,6 +482,7 @@ functions:
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
+            type: request 
 
   download:
     handler: get-presigned-urls/index.handler
@@ -490,6 +493,7 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
+            resultTtlInSeconds: 1
             resultTtlInSeconds: 1
 
   login:
