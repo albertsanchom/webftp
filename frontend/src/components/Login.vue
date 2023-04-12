@@ -100,32 +100,7 @@
 </style>
 
 <script>
-  //import endpoint from '@/assets/js/endpoint.js'
-  import { jwtDecode } from 'jwt-js-decode';
   import endpoint from '@/assets/js/endpoint.js'
-
-  /*const decoder = (base64url) => {
-    let json_string;
-    try {
-      const base64 = base64url.replace('-', '+').replace('_', '/');
-      const utf8 = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      const json = JSON.parse(utf8);
-      json_string = JSON.stringify(json, null, 4);
-    } catch (err) {
-      json_string = "Bad Section.\nError: " + err.message;
-    }
-    return json_string;
-  }*/
-
-  //gets cookie
-  const getCookieValue = (name) => {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
-    return null;
-  }
 
   export default {
     name : 'LoginComponent',
