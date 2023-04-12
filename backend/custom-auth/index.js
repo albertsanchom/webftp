@@ -68,7 +68,7 @@ async function getPermissions(user){
 module.exports.handler = async (event, context, callback) => {
   console.log(JSON.stringify(event));
   //const token = event.authorizationToken;
-  const token = getCookie("oidc_token", event.headers.Cookie);
+  const token = getCookieValue("oidc_token", event.headers.Cookie);
   if(!token){
     return ('Unauthorized ', 'No token'); // Return a 401 Unauthorized response
   }
