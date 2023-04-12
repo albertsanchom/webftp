@@ -134,13 +134,11 @@
       const that = this;
 
       let profile = await this.$getRequest(endpoint.get() + "profile");
-      let name = null;
-      try{
-        profile = JSON.parse(profile);
+      if(typeof profile==="object"){
         window.localStorage.setItem("token_name", profile.given_name);
         that.emitLogged({isLogged : true, name : window.localStorage.getItem("token_name")});
-      }catch(e){
-        console.log("error parsing user profile");
+      }else{
+        console.log("not logged");
         that.emitLogged({isLogged : false, name : null});
       }
     },

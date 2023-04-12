@@ -182,24 +182,21 @@
         this.userName = data.name || null;
         this.isLogged = data.isLogged;
         if(!this.isLogged){
-          window.localStorage.removeItem("token");
-          window.localStorage.removeItem("token_ttl");
           window.localStorage.removeItem("token_name");
-          window.localStorage.removeItem("token_email");
         }
       },
-      isValidToken() {
+      /*isValidToken() {
         if(!window.localStorage.getItem("token") || (((+new Date()/1000)+60)>window.localStorage.getItem("token_ttl"))){
           return false;
         }
         return true;
-      },
+      },*/
       async actionControler(action, data) {
         this.loading = true;
-        if(!this.isValidToken()){
+        /*if(!this.isValidToken()){
           this.setLogged({isLogged:false, name: null});
           this.loading = false;
-        }
+        }*/
         //action to do
         switch(action){
           case "browse": {
@@ -349,10 +346,10 @@
           folderSearch = '';
         }
 
-        if(!this.isValidToken()){
+        /*if(!this.isValidToken()){
           this.setLogged({isLogged : false, name: null});
           this.loading = false;
-        }
+        }*/
         //path management
         switch(route){
           case 'forward':
