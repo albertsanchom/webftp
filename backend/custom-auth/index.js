@@ -10,6 +10,7 @@ function getCookieValue(str, strCookie){
   const decodedCookies = decodeURIComponent(strCookie);
   const arrayCookies = decodedCookies.split('; ');
   let res = null;
+  
   arrayCookies.forEach(val => {
     if (val.indexOf(name)===0){
       res = val.substring(name.length);
@@ -69,6 +70,7 @@ module.exports.handler = async (event, context, callback) => {
   console.log(JSON.stringify(event));
   //const token = event.authorizationToken;
   const token = getCookieValue("oidc_token", event.headers.Cookie);
+  console.log("token: ", token)
   if(!token){
     return ('Unauthorized ', 'No token'); // Return a 401 Unauthorized response
   }
