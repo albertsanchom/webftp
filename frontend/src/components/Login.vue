@@ -102,6 +102,7 @@
 <script>
   //import endpoint from '@/assets/js/endpoint.js'
   import { jwtDecode } from 'jwt-js-decode';
+  import endpoint from '@/assets/js/endpoint.js'
 
   /*const decoder = (base64url) => {
     let json_string;
@@ -129,39 +130,18 @@
   export default {
     name : 'LoginComponent',
     props : ['isLogged'],
-    mounted: function () {
+    mounted: async function () {
       const that = this;
 
-      //const queryString = window.location.search;
-      //const urlParams = new URLSearchParams(queryString);
-      //const token = urlParams.get('token');
-
-      let token_ttl=window.localStorage.getItem("token_ttl");
-      //let token_ttl = -1;
-      //let oidc_token = token;
-      let oidc_token = getCookieValue('oidc_token');
-      if(oidc_token){ // if token from campus exists tries to use it
-        window.localStorage.setItem("token", oidc_token);
-        try{
-          oidc_token = jwtDecode(oidc_token).payload;
-          console.log(oidc_token);
-          //oidc_token = JSON.parse(decoder(oidc_token.split(".")[1]));
-          token_ttl = oidc_token.exp;
-          window.localStorage.setItem("token_ttl", token_ttl);
-          //oidc_token = JSON.parse(oidc_token.sub);
-          window.localStorage.setItem("token_name", oidc_token.given_name);
-        }catch(e){
-          console.error("token error");
-        }
-      }
-
-      if((+new Date()/1000)>token_ttl){
-        window.localStorage.removeItem("token");
-        window.localStorage.removeItem("token_ttl");
-        window.localStorage.removeItem("token_name");
-        that.emitLogged({isLogged : false, name : null});
-      }else{
+      let profile = await this.$getRequest(endpoint.get() + "profile");
+      let name = null;
+      try{
+        profile = JSON.parse(profile);
+        window.localStorage.setItem("token_name", profile.given_name);
         that.emitLogged({isLogged : true, name : window.localStorage.getItem("token_name")});
+      }catch(e){
+        console.log("error parsing user profile");
+        that.emitLogged({isLogged : false, name : null});
       }
     },
     methods: {

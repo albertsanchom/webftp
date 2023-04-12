@@ -43,7 +43,7 @@ utilities.install = function (app) {
   app.config.globalProperties.$generateFormData = _generateFormData;
 
   app.config.globalProperties.$getRequest = async(url) => {
-    url = url + "&ts=" + (+new Date);
+    url = url + (url.indexOf("?")>0?"&":"?")+"ts=" + (+new Date);
     return new Promise((resolve, reject) => {
       fetch(url, {
           method: 'GET', 
