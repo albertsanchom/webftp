@@ -48,7 +48,7 @@ utilities.install = function (app) {
       fetch(url, {
           method: 'GET', 
           mode: 'cors', 
-          credentials: 'omit',
+          credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': window.localStorage.getItem("token")
