@@ -494,7 +494,7 @@ functions:
           authorizer:
             name: custom-auth
             resultTtlInSeconds: 1
-            resultTtlInSeconds: 1
+            type: request 
 
   login:
     handler: login/app.handler
