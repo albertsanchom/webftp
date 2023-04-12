@@ -78,10 +78,10 @@ utilities.install = function (app) {
       fetch(url, {
           method: 'POST', 
           mode: 'cors', 
-          credentials: 'omit',
+          credentials: 'same-origin',
           headers: {
           //'Content-Type': 'text/html',
-          ...auth && {'Authorization': window.localStorage.getItem("token")}
+          //...auth && {'Authorization': window.localStorage.getItem("token")}
           },
           redirect: 'follow',
           body: data,
