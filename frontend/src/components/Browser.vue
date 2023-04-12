@@ -278,10 +278,8 @@
         prettyName(item, prefix) {
           item = this.$trimSlash(item);
           if(item.indexOf("webftp-protected-files")>-1){
-            //return "campus";
             return item.replace(/^webftp-protected-files-((\bdev\b)|(\btest\b)|(\bpre\b)|(\bpro\b))/,'protected');
           }else if(item.indexOf("webftp-files")>-1){
-            //return "public";
             return item.replace(/^webftp-files-((\bdev\b)|(\btest\b)|(\bpre\b)|(\bpro\b))/,'public');
           }else{
             return this.cleanKey(item, prefix);

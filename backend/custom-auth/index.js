@@ -67,11 +67,9 @@ async function getPermissions(user){
   * @throws Returns 403 if the token does not have sufficient permissions.
   */
 module.exports.handler = async (event, context, callback) => {
-  //console.log(JSON.stringify(event));
   //const token = event.authorizationToken;
   const token = getCookieValue("oidc_token", event.headers.Cookie);
-  console.log("token: ", event.headers.Cookie)
-  console.log("token: ", token)
+  
   if(!token){
     return ('Unauthorized ', 'No token'); // Return a 401 Unauthorized response
   }

@@ -384,7 +384,7 @@
         }
 
         this.checkIfRoot();
-        history.pushState(null,'','/'+this.currentDir.replace(/^webftp-protected-files-((\btest\b)|(\bpre\b)|(\bpro\b))/,'campus').replace(/^webftp-files-((\btest\b)|(\bpre\b)|(\bpro\b))/,'public'))
+        history.pushState(null,'','/'+this.currentDir.replace(/^webftp-protected-files-((\btest\b)|(\bpre\b)|(\bpro\b))/,'protected').replace(/^webftp-files-((\btest\b)|(\bpre\b)|(\bpro\b))/,'public'))
 
         try{
           if(!paginationToken){
