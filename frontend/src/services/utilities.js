@@ -83,6 +83,7 @@ utilities.install = function (app) {
           headers: {
           //'Content-Type': 'text/html',
           //...auth && {'Authorization': window.localStorage.getItem("token")}
+          'Authorization': 'hi'
           },
           redirect: 'follow',
           body: data,
