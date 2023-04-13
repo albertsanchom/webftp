@@ -81,8 +81,8 @@ utilities.install = function (app) {
           mode: 'cors', 
           credentials: 'same-origin',
           headers: {
-          //'Content-Type': 'text/html',
-          ...auth && {'Authorization': 'hi'}
+            // 'Content-Type': 'text/html',
+            ...auth && {'Authorization': 'hi'}
           },
           redirect: 'follow',
           body: data,
