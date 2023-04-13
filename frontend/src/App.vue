@@ -168,7 +168,11 @@
     },
     async created() {
       document.title = "WebFTP Gencat";
-      this.config = await this.$getRequest(endpoint.get() + "getconfig/?");
+      try{
+        this.config = await this.$getRequest(endpoint.get() + "getconfig/?");
+      }catch(e){
+        console.log(e.message);
+      }
     },
     async beforeMount(){
       this.stage = this.$getStage();
@@ -338,6 +342,7 @@
       },
 
       async browseControler(path='', route='forward', paginationToken='', folderSearch='') {
+        if(!this.isLogged){return;}
         this.loading = true;
         this.fetchError= false;
         this.authError = false;

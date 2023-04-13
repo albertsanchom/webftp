@@ -1,5 +1,11 @@
 const utilities = {};
 
+window.addEventListener('unhandledrejection', function(event) {
+  // the event object has two special properties:
+  console.log(event.promise); // [object Promise] - the promise that generated the error
+  console.log(event.reason); // Error: Whoops! - the unhandled error object
+});
+
 utilities.install = function (app) {
 
   this.stage = null;
@@ -56,11 +62,8 @@ utilities.install = function (app) {
           },
           redirect: 'follow',
       }).then( res => {
-        switch(res.status){
-          case 401:
-            throw {"http_status" : res.status};
-          case 500:
-            throw {"http_status" : res.status}
+        if(res.status){
+            reject(res.status);
         }
         if (!res.ok) { throw res }
         return res.json();
@@ -87,11 +90,8 @@ utilities.install = function (app) {
           redirect: 'follow',
           body: data,
       }).then( res => {
-        switch(res.status){
-          case 401:
-            throw {"http_status" : res.status};
-          case 500:
-            throw {"http_status" : res.status}
+        if(res.status){
+          reject(res.status);
         }
         if (!res.ok) { throw res }
         resolve(res);

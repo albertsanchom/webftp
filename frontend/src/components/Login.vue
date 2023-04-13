@@ -108,8 +108,14 @@
     mounted: async function () {
       const that = this;
 
-      let profile = await this.$getRequest(endpoint.get() + "profile");
-      if(typeof profile==="object"){
+      let profile = null;
+      
+      try{
+        profile = await this.$getRequest(endpoint.get() + "profile");
+      }catch(e){
+        console.log(e.message);
+      }
+      if(profile && typeof profile==="object"){
         window.localStorage.setItem("token_name", profile.given_name);
         that.emitLogged({isLogged : true, name : window.localStorage.getItem("token_name")});
       }else{
