@@ -110,11 +110,8 @@
 
       let profile = null;
       
-      try{
-        profile = await this.$getRequest(endpoint.get() + "profile");
-      }catch(e){
-        console.log(e.message);
-      }
+      profile = await this.$getRequest(endpoint.get() + "profile");
+
       if(profile && typeof profile==="object"){
         window.localStorage.setItem("token_name", profile.given_name);
         that.emitLogged({isLogged : true, name : window.localStorage.getItem("token_name")});
