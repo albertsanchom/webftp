@@ -168,7 +168,11 @@
     },
     async created() {
       document.title = "WebFTP Gencat";
-      this.config = await this.$getRequest(endpoint.get() + "getconfig/?");
+      try{
+        this.config = await this.$getRequest(endpoint.get() + "getconfig/?");
+      }catch(e){
+        console.log(e.message);
+      }
     },
     async beforeMount(){
       this.stage = this.$getStage();

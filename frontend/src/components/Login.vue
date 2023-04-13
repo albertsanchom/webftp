@@ -109,8 +109,12 @@
       const that = this;
 
       let profile = null;
-      
-      profile = await this.$getRequest(endpoint.get() + "profile");
+
+      try{
+        profile = await this.$getRequest(endpoint.get() + "profile");
+      }catch(e){
+        console.log(e.message);
+      }
 
       if(profile && typeof profile==="object"){
         window.localStorage.setItem("token_name", profile.given_name);
