@@ -456,7 +456,7 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 30
+            resultTtlInSeconds: 1
             type: request 
 
   delete:
@@ -468,7 +468,7 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 30
+            resultTtlInSeconds: 1
             type: request 
     timeout: 30
 
@@ -481,7 +481,7 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 30
+            resultTtlInSeconds: 1
             type: request 
 
   download:
@@ -493,7 +493,7 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 30
+            resultTtlInSeconds: 1
             type: request 
 
   login:
