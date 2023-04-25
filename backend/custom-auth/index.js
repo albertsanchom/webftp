@@ -93,10 +93,10 @@ module.exports.handler = async (event, context, callback) => {
   try{
     let user = null;
 
-    user = getTokenPayload(process.env.OID_PUBLIC_x509, process.env.ISSUER, process.env.OID_CLIENTID);
+    user = await getTokenPayload(process.env.OID_PUBLIC_x509, process.env.ISSUER, process.env.OID_CLIENTID);
 
     if(user.error!==null){
-      user = getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID);
+      user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID);
     }
 
     if(user.error!==null){
