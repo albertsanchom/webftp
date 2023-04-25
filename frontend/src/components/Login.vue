@@ -1,13 +1,22 @@
 <template>
   <section id="loginContainer" v-if="!isLogged">
-  <div class="type-1">
-      <div>
-          <a href="/api/auth" id="login" class="btn btn-2" v-on:click="doLogin()">
-              <span class="txt">{{ $t('login') }}</span>
-              <span class="round"><i class="fa fa-chevron-right"></i></span>
-          </a>
-      </div>
-  </div>
+    <div class="type-1">
+        <div>
+            <a href="/api/auth" id="login" class="btn btn-2" v-on:click="doLogin()">
+                <span class="txt">{{ $t('login') }}</span>
+                <span class="round"><i class="fa fa-chevron-right"></i></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="type-1">
+        <div>
+            <a href="/api/google/auth" id="google-login" class="btn btn-2" v-on:click="doLogin()">
+                <span class="txt">{{ $t('google-login') }}</span>
+                <span class="round"><i class="fa fa-chevron-right"></i></span>
+            </a>
+        </div>
+    </div>
   </section>
 </template>
 
@@ -17,6 +26,7 @@
   }
   #loginContainer .btn-2 {
     background-color: #BF0000;
+    min-width: 10em;
   }
   #loginContainer .btn-2 .round {
     background-color: #e25e5e;
@@ -126,7 +136,7 @@
     },
     methods: {
       doLogin() {
-        if(window.location.pathname.toString().length>"1"){
+        if(window.location.pathname.toString().length>1){
             window.location.replace("/api/auth?redirect="+window.location.toString());
         }
       },

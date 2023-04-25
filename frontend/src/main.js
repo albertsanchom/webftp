@@ -10,7 +10,8 @@ const i18n = createI18n({
   allowComposition: true, // you need to specify that!
   messages : { 
     "ca": {
-      "login": "Entra",
+      "login": "GICAR",
+      "google-login": "Google",
       "deleted" : "Esborrat",
       "deleting" : "Esborrant",
       "uploaded" : "Pujat",
@@ -36,7 +37,8 @@ const i18n = createI18n({
       "fetchError" : "S'ha produït un error en recuperar les dades. Si us plau, torna a fer la petició"
     },
     "es": {
-      "login": "Entra",
+      "login": "GICAR",
+      "google-login": "Google",
       "deleted" : "Eliminado",
       "deleting" : "Eliminando",
       "uploaded" : "Subido",
@@ -62,7 +64,8 @@ const i18n = createI18n({
       "fetchError" : "Se ha producido un error al recuperar los datos. Por favor, vuelve a solicitar los datos"
     },
     "en": {
-      "login": "Enter",
+      "login": "GICAR",
+      "google-login": "Google",
       "deleted" : "Deleted",
       "deleting" : "Deleting",
       "uploaded" : "Uploaded",
