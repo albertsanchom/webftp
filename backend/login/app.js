@@ -18,6 +18,12 @@ if(config && config.debug){
 // Express setup
 app.set('port', config ? config.port : 3000);
 
+//Mandatory env vars
+if(!config.baseURL || !config.clientID || !config.clientSecret || !config.redirectURIPath){
+  console.log("Mandatory environment variables: \nBASEURL \nOID_CLIENTID \nOID_REDIRECTURI_PATH \nOID_CLIENTSECRET");
+  process.exit();
+}
+
 if(config){
   app.use(cookieParser());
   app.use(bodyParser.json());
