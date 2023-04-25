@@ -5,9 +5,9 @@ const _BUCKET = process.env.BUCKET || "";
 const _FILE = process.env.FILE || "";
 
 
-function getTokenPayload(publicCert, issuer, clientID){
+async function getTokenPayload(publicCert, issuer, clientID){
   const alg = 'RS256'
-  let x509 = process.env.OID_PUBLIC_x509;
+  let x509 = publicCert;
   const publicKey = await jose.importX509(x509, alg)
 
   try{
