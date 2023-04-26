@@ -2,6 +2,7 @@ const { auth, requiresAuth } = require('express-openid-connect');
 
 module.exports = function (app, config){
 	app.use(
+		'/oidc',
 		auth({
 			authRequired : false,
 			issuerBaseURL: config.issuer || 'https://accounts.google.com',
@@ -32,6 +33,42 @@ module.exports = function (app, config){
 		})
 	);
 
+
+	//error handling in callback
+	app.use((err, req, res, next) => {
+		if(req.path===(config.api_path + config.redirectURIPath)){ //redirectURIPath = callback url
+		  console.log(err);
+		}else{
+			console.log(err);
+			res.status(500).send('Error!');
+		}
+	});	
+
+	//profile
+	app.get(config.api_path+'/oidc/profile', requiresAuth(), async function(req, res){
+		if(req.oidc && req.oidc.user){
+			res.jsonp(req.oidc.user);
+		}else{
+			res.status(403).send("forbidden");
+		}
+	});
+
+	app.get(config.api_path+'/oidc/auth', requiresAuth(), async function(req, res){
+		const redirect = req.query.redirect?req.query.redirect:'/';
+		res.redirect(redirect);
+	});
+
+	app.get(config.api_path+'/oidc/getId', requiresAuth(), async function(req, res){
+		const redirect = req.query.redirect?req.query.redirect:'/';
+		res.redirect(`${redirect}?token=${req.oidc.idToken}`);
+	});
+
+	app.get(config.api_path+'/oidc/getAccess', requiresAuth(), async function(req, res){
+		let { access_token } = req.oidc.accessToken;
+		const redirect = req.query.redirect?req.query.redirect:'/';
+		res.redirect(`${redirect}?token=${access_token}`);
+	});
+
 	if(config.google.clientID){
 		app.use(
 			'/google',
@@ -44,7 +81,6 @@ module.exports = function (app, config){
 				secret: config.cookies_secret,
 				idpLogout: true,
 				routes : {
-					login: false,
 					callback: config.api_path + config.google.redirectURIPath
 				},
 				authorizationParams: {
@@ -66,15 +102,6 @@ module.exports = function (app, config){
 			})
 		);
 
-		app.get(config.api_path+'/google/login', (req, res) =>
-			res.oidc.login({
-				returnTo: '/profile',
-				authorizationParams: {
-					redirect_uri: config.baseURL + config.api_path + '/google/callback',
-				},
-			})
-	  	);
-
 		app.get(config.api_path+'/google/callback', (req, res) =>
 			res.oidc.callback({
 		  		redirectUri: config.baseURL + config.api_path + '/google/callback',
@@ -93,41 +120,6 @@ module.exports = function (app, config){
 		});
 
 	}
-
-	//error handling in callback
-	app.use((err, req, res, next) => {
-		if(req.path===(config.api_path + config.redirectURIPath)){ //redirectURIPath = callback url
-		  console.log(err);
-		}else{
-			console.log(err);
-			res.status(500).send('Error!');
-		}
-	});	
-
-	//profile
-	app.get(config.api_path+'/profile', requiresAuth(), async function(req, res){
-		if(req.oidc && req.oidc.user){
-			res.jsonp(req.oidc.user);
-		}else{
-			res.status(403).send("forbidden");
-		}
-	});
-
-	app.get(config.api_path+'/auth', requiresAuth(), async function(req, res){
-		const redirect = req.query.redirect?req.query.redirect:'/';
-		res.redirect(redirect);
-	});
-
-	app.get(config.api_path+'/getId', requiresAuth(), async function(req, res){
-		const redirect = req.query.redirect?req.query.redirect:'/';
-		res.redirect(`${redirect}?token=${req.oidc.idToken}`);
-	});
-
-	app.get(config.api_path+'/getAccess', requiresAuth(), async function(req, res){
-		let { access_token } = req.oidc.accessToken;
-		const redirect = req.query.redirect?req.query.redirect:'/';
-		res.redirect(`${redirect}?token=${access_token}`);
-	});
 
     return {
         'requiresAuth' : requiresAuth
