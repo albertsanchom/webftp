@@ -513,9 +513,6 @@ functions:
       OID_CLIENTID: ${self:custom.oidClientId}
       OID_CLIENTSECRET: ${self:custom.oidClientSecret}
       OID_REDIRECTURI_PATH: ${self:custom.oidRedirectUriPath}
-      G_OID_CLIENTID: ${self:custom.gOidClientId}
-      G_OID_CLIENTSECRET: ${self:custom.gOidClientSecret}
-      G_OID_REDIRECTURI_PATH: ${self:custom.gOidRedirectUriPath}
       COOKIES_SECRET: ${self:custom.cookiesSecret}
       COOKIES_TTL: ${self:custom.cookiesTtl}
 
@@ -524,11 +521,9 @@ functions:
     environment:
       BUCKET: ${self:custom.authzBucket}
       FILE: permissions.csv
-      ISSUER: ${self:custom.issuer}
       OID_PUBLIC_x509: ${self:custom.oidPublicX509}
+      ISSUER: ${self:custom.issuer}
       OID_CLIENTID: ${self:custom.oidClientId}
-      G_OID_PUBLIC_x509: ${self:custom.gOidPublicX509}
-      G_OID_CLIENTID: ${self:custom.gOidClientId}
       REGION: ${self:provider.region}
 
   getConfig:
@@ -555,10 +550,6 @@ custom:
   #oidPublicX509: ${file(env/${self:service}.${self:provider.stage}.json):OID_PUBLIC_x509}
   oidPublicX509: ${ssm:/${self:service}-config/${self:provider.stage}/oidPublicX509}
   oidRedirectUriPath: ${file(env/${self:service}.${self:provider.stage}.json):OID_REDIRECTURI_PATH}
-  gOidClientId: ${ssm:/${self:service}-config/${self:provider.stage}/gOidClientId}
-  gOidClientSecret: ${ssm:/${self:service}-config/${self:provider.stage}/gOidClientSecret}
-  gOidPublicX509: ${ssm:/${self:service}-config/${self:provider.stage}/gOidPublicX509}
-  gOidRedirectUriPath: ${file(env/${self:service}.${self:provider.stage}.json):G_OID_REDIRECTURI_PATH}
   issuer: ${file(env/${self:service}.${self:provider.stage}.json):ISSUER}
   #cookiesSecret: ${file(env/${self:service}.${self:provider.stage}.json):COOKIES_SECRET}
   cookiesSecret: ${ssm:/${self:service}-config/${self:provider.stage}/cookiesSecret}
