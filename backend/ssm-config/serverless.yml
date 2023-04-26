@@ -51,3 +51,21 @@ resources:
         Name: /${self:service}/${self:provider.stage}/awsPrivateKey
         Type: String
         Value: ${file(env/${self:service}.${self:provider.stage}.json):AWS_PRIVATEKEY}
+    gOidClientId:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/gOidClientId
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):G_OID_CLIENTID}
+    gOidClientSecret:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/gOidClientSecret
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):G_OID_CLIENTSECRET}
+    gOidPublicX509:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:service}/${self:provider.stage}/gOidPublicX509
+        Type: String
+        Value: ${file(env/${self:service}.${self:provider.stage}.json):G_OID_PUBLIC_x509}

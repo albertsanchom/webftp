@@ -14,6 +14,7 @@
     "ISSUER": "https://preproduccio.endpointma.autenticaciogicar4.extranet.gencat.cat/realms/gicarcpd4",
     "BASEURL": "https://d3o2ozrfxeqmbx.cloudfront.net",
     "OID_REDIRECTURI_PATH": "/login/callback",
+    "G_OID_REDIRECTURI_PATH": "/google/callback",
     "COOKIES_TTL": 3600,
     "AWS_SIGNEDCOOKIES_TTL": 3600
 }
