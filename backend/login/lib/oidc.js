@@ -67,7 +67,7 @@ module.exports = function (app, config){
 		res.redirect(`${redirect}?token=${access_token}`);
 	});
 
-	if(config.google.clientID){
+	/*if(config.google.clientID){
 		app.use(
 			'/google',
 			auth({
@@ -117,7 +117,7 @@ module.exports = function (app, config){
 			res.redirect(redirect);
 		});
 
-	}
+	}*/
 
     return {
         'requiresAuth' : requiresAuth

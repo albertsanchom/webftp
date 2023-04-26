@@ -505,7 +505,6 @@ functions:
           cors: true
 
     environment:
-      ALLOWED_DOMAINS: ${self:custom.domain},${self:custom.frontBucket}-${self:provider.stage}.s3-${self:provider.region}.amazonaws.com,localhost:8080
       API_PATH: ${self:custom.apiPath}
       STAGE: ${self:provider.stage}
       ISSUER: ${self:custom.issuer}
@@ -513,6 +512,25 @@ functions:
       OID_CLIENTID: ${self:custom.oidClientId}
       OID_CLIENTSECRET: ${self:custom.oidClientSecret}
       OID_REDIRECTURI_PATH: ${self:custom.oidRedirectUriPath}
+      G_OID_CLIENTID: ${self:custom.gOidClientId}
+      G_OID_CLIENTSECRET: ${self:custom.gOidClientSecret}
+      G_OID_REDIRECTURI_PATH: ${self:custom.gOidRedirectUriPath}
+      COOKIES_SECRET: ${self:custom.cookiesSecret}
+      COOKIES_TTL: ${self:custom.cookiesTtl}
+
+  login-google:
+    handler: login/app.handler
+    events:
+      - http:
+          path: ${self:custom.apiPath}/google/{proxy+}
+          method: any
+          cors: true
+
+    environment:
+      API_PATH: ${self:custom.apiPath}/google
+      STAGE: ${self:provider.stage}
+      ISSUER: 'https://accounts.google.com'
+      BASEURL: ${self:custom.baseUrl}
       G_OID_CLIENTID: ${self:custom.gOidClientId}
       G_OID_CLIENTSECRET: ${self:custom.gOidClientSecret}
       G_OID_REDIRECTURI_PATH: ${self:custom.gOidRedirectUriPath}
