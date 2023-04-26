@@ -23,7 +23,7 @@ module.exports = function(){
 	}
 	
 	return {
-		'debug' : (process.env.DEBUG==='true' ? true : false);
+		'debug' : (process.env.DEBUG==='true' ? true : false),
 		'issuer' : process.env.ISSUER || 'https://accounts.google.com',
 		'baseURL' : process.env.BASEURL,
 		'clientID' : process.env.OID_CLIENTID,
