@@ -23,7 +23,7 @@ module.exports = function (app, config){
                 rolling: true,
                 rollingDuration: config.cookies_ttl,
                 absoluteDuration: config.cookies_ttl,
-				/name: 'sessionOIDC' 
+				name: 'sessionOIDC' 
             },       
 			afterCallback: (req, res, session) => {
 				res.cookie('oidc_token', session.id_token, {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
