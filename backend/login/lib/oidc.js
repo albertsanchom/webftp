@@ -2,7 +2,6 @@ const { auth, requiresAuth } = require('express-openid-connect');
 
 module.exports = function (app, config){
 	app.use(
-		'/oidc',
 		auth({
 			authRequired : false,
 			issuerBaseURL: config.issuer || 'https://accounts.google.com',
@@ -33,7 +32,6 @@ module.exports = function (app, config){
 		})
 	);
 
-
 	//error handling in callback
 	app.use((err, req, res, next) => {
 		if(req.path===(config.api_path + config.redirectURIPath)){ //redirectURIPath = callback url
@@ -45,7 +43,7 @@ module.exports = function (app, config){
 	});	
 
 	//profile
-	app.get(config.api_path+'/oidc/profile', requiresAuth(), async function(req, res){
+	app.get(config.api_path+'/profile', requiresAuth(), async function(req, res){
 		if(req.oidc && req.oidc.user){
 			res.jsonp(req.oidc.user);
 		}else{
@@ -53,17 +51,17 @@ module.exports = function (app, config){
 		}
 	});
 
-	app.get(config.api_path+'/oidc/auth', requiresAuth(), async function(req, res){
+	app.get(config.api_path+'/auth', requiresAuth(), async function(req, res){
 		const redirect = req.query.redirect?req.query.redirect:'/';
 		res.redirect(redirect);
 	});
 
-	app.get(config.api_path+'/oidc/getId', requiresAuth(), async function(req, res){
+	app.get(config.api_path+'/getId', requiresAuth(), async function(req, res){
 		const redirect = req.query.redirect?req.query.redirect:'/';
 		res.redirect(`${redirect}?token=${req.oidc.idToken}`);
 	});
 
-	app.get(config.api_path+'/oidc/getAccess', requiresAuth(), async function(req, res){
+	app.get(config.api_path+'/getAccess', requiresAuth(), async function(req, res){
 		let { access_token } = req.oidc.accessToken;
 		const redirect = req.query.redirect?req.query.redirect:'/';
 		res.redirect(`${redirect}?token=${access_token}`);
