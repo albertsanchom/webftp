@@ -23,7 +23,7 @@ module.exports = function (app, config){
                 rolling: true,
                 rollingDuration: config.cookies_ttl,
                 absoluteDuration: config.cookies_ttl,
-				//name: 'SessionOidc' 
+				/name: 'sessionOIDC' 
             },       
 			afterCallback: (req, res, session) => {
 				res.cookie('oidc_token', session.id_token, {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
@@ -44,6 +44,7 @@ module.exports = function (app, config){
 				secret: config.cookies_secret,
 				idpLogout: true,
 				routes : {
+					login: false,
 					callback: config.api_path + config.google.redirectURIPath
 				},
 				authorizationParams: {
@@ -56,7 +57,7 @@ module.exports = function (app, config){
 					rolling: true,
 					rollingDuration: config.cookies_ttl,
 					absoluteDuration: config.cookies_ttl,
-					name: 'SessionGoogle' 
+					name: 'sessionGoogle' 
 				},       
 				afterCallback: (req, res, session) => {
 					res.cookie('oidc_token', session.id_token, {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
@@ -64,6 +65,15 @@ module.exports = function (app, config){
 				},				   
 			})
 		);
+
+		app.get(config.api_path+'/google/login', (req, res) =>
+			res.oidc.login({
+				returnTo: '/profile',
+				authorizationParams: {
+					redirect_uri: config.baseURL + config.api_path + '/google/callback',
+				},
+			})
+	  	);
 
 		app.get(config.api_path+'/google/callback', (req, res) =>
 			res.oidc.callback({
