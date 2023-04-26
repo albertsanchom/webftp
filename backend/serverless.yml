@@ -512,9 +512,6 @@ functions:
       OID_CLIENTID: ${self:custom.oidClientId}
       OID_CLIENTSECRET: ${self:custom.oidClientSecret}
       OID_REDIRECTURI_PATH: ${self:custom.oidRedirectUriPath}
-      G_OID_CLIENTID: ${self:custom.gOidClientId}
-      G_OID_CLIENTSECRET: ${self:custom.gOidClientSecret}
-      G_OID_REDIRECTURI_PATH: ${self:custom.gOidRedirectUriPath}
       COOKIES_SECRET: ${self:custom.cookiesSecret}
       COOKIES_TTL: ${self:custom.cookiesTtl}
 

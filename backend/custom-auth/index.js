@@ -17,6 +17,7 @@ async function getTokenPayload(publicCert, issuer, clientID, token){
     })
     return {'email' : payload.email, 'error' : null};
   }catch(e){
+    console.error(e.message);
     return {'error' : e.message}; // Return a 401 Unauthorized response
   }
 }
@@ -110,6 +111,7 @@ module.exports.handler = async (event, context, callback) => {
 
     return (null, policyDocument); 
   }catch(e) {
+    console.error(e.message);
     return ('Unauthorized ', e.message); // Return a 401 Unauthorized response
   }
 };
