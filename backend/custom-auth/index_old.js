@@ -5,22 +5,6 @@ const _BUCKET = process.env.BUCKET || "";
 const _FILE = process.env.FILE || "";
 
 
-async function getTokenPayload(publicCert, issuer, clientID){
-  const alg = 'RS256'
-  let x509 = publicCert;
-  const publicKey = await jose.importX509(x509, alg)
-
-  try{
-    const { payload } = await jose.jwtVerify(token, publicKey, {
-      issuer: issuer,
-      audience: clientID,
-    })
-    return {'email' : payload.email, 'error' : null};
-  }catch(e){
-    return {'error' : e.message}; // Return a 401 Unauthorized response
-  }
-}
-
 function getCookieValue(str, strCookie){
   const name = str + "=";
   const decodedCookies = decodeURIComponent(strCookie);
@@ -92,21 +76,24 @@ module.exports.handler = async (event, context, callback) => {
 
   try{
     let user = null;
-
-    user = await getTokenPayload(process.env.OID_PUBLIC_x509, process.env.ISSUER, process.env.OID_CLIENTID);
-
-    if(user.error!==null){
-      user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID);
+    const alg = 'RS256'
+    let x509 = process.env.OID_PUBLIC_x509;
+    const publicKey = await jose.importX509(x509, alg)
+  
+    try{
+      const { payload, protectedHeader } = await jose.jwtVerify(token, publicKey, {
+        issuer: process.env.ISSUER,
+        audience: process.env.OID_CLIENTID,
+      })
+      user = payload.email;
+    }catch(e){
+      return ('Unauthorized ', e.message); // Return a 401 Unauthorized response
     }
 
-    if(user.error!==null){
-      return ('Unauthorized ', user.error); // Return a 401 Unauthorized response
-    }
-
-    const permissions = await getPermissions(user.email);
+    const permissions = await getPermissions(user);
     const effect = Object.keys(permissions).length>0 ? "Allow" : "Deny";
-    const authorizerContext = { "user": user.email, "permissions" : JSON.stringify(permissions)};
-    const policyDocument = buildIAMPolicy(user.email, effect, event.methodArn, authorizerContext);
+    const authorizerContext = { "user": user, "permissions" : JSON.stringify(permissions)};
+    const policyDocument = buildIAMPolicy(user, effect, event.methodArn, authorizerContext);
 
     return (null, policyDocument); 
   }catch(e) {
