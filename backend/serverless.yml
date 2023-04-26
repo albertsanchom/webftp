@@ -531,9 +531,9 @@ functions:
       STAGE: ${self:provider.stage}
       ISSUER: 'https://accounts.google.com'
       BASEURL: ${self:custom.baseUrl}
-      G_OID_CLIENTID: ${self:custom.gOidClientId}
-      G_OID_CLIENTSECRET: ${self:custom.gOidClientSecret}
-      G_OID_REDIRECTURI_PATH: ${self:custom.gOidRedirectUriPath}
+      OID_CLIENTID: ${self:custom.gOidClientId}
+      OID_CLIENTSECRET: ${self:custom.gOidClientSecret}
+      OID_REDIRECTURI_PATH: ${self:custom.gOidRedirectUriPath}
       COOKIES_SECRET: ${self:custom.cookiesSecret}
       COOKIES_TTL: ${self:custom.cookiesTtl}
 
