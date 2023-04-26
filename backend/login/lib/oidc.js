@@ -32,7 +32,7 @@ module.exports = function (app, config){
 		})
 	);
 
-	if(config.google.clientID){
+	/*if(config.google.clientID){
 		app.use(
 			'/google',
 			auth({
@@ -82,7 +82,7 @@ module.exports = function (app, config){
 			res.redirect(redirect);
 		});
 
-	}
+	}*/
 
 	//error handling in callback
 	app.use((err, req, res, next) => {
