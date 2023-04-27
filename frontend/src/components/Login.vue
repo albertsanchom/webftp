@@ -11,7 +11,7 @@
 
     <div class="type-1">
         <div>
-            <a href="/api/google/auth" id="google-login" class="btn btn-2" v-on:click="doLogin('/google')">
+            <a href="/api/google/auth" id="google-login" class="btn btn-2" v-on:click="doLogin('google/')">
                 <span class="txt">{{ $t('google-login') }}</span>
                 <span class="round"><i class="fa fa-chevron-right"></i></span>
             </a>
