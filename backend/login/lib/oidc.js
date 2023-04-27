@@ -67,6 +67,14 @@ module.exports = function (app, config){
 		res.redirect(`${redirect}?token=${access_token}`);
 	});
 
+	app.get(config.api_path+'/logout', async function(req, res){
+		res.clearCookie("oidc_token");
+		res.clearCookie("sessionOIDC");
+		res.clearCookie("sessionOIDC.0");
+		res.clearCookie("sessionOIDC.1");
+		res.redirect("/");
+	});
+
     return {
         'requiresAuth' : requiresAuth
     };

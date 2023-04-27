@@ -22,6 +22,7 @@
                 v-bind:isLogged="isLogged"
                 v-bind:authError="authError"
                 v-bind:readWrite="readWrite"
+                v-bind:endpoint="endpoint"
       />
 
       <Browser @browse="browseControler"
@@ -149,7 +150,8 @@
         userName : "",
         authError : false,
         fetchError : false,
-        folderSearch : true
+        folderSearch : true,
+        endpoint : endpoint.get()
       }
     },/*
     mounted() {
