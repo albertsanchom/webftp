@@ -63,7 +63,7 @@
             return {
                 this.service: window.localStorage.getItem("service")
             }
-        }
+        },
         sendAction(action, data){
           this.$emit('action', action, data);
         }
