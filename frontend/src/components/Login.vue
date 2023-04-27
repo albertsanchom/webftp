@@ -141,8 +141,8 @@
       doLogin(service){
         if(window.location.pathname.toString().length>1){
             window.location.replace("/api/auth?redirect="+window.location.toString());
-            window.localStorage.setItem("login", service);
         }
+        window.localStorage.setItem("login", service);
       },
       emitLogged(data) {
         this.$emit("logged", data);
