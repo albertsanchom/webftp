@@ -112,6 +112,7 @@
     }
     body{
       font-size: 1.2em;
+      padding:.5em;
     }
     #container div{
       padding: 0;

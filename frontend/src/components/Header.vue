@@ -40,6 +40,7 @@
     .brand-header .w100-inline-block{width:100%;float:left;display:inline-block;}
     .brand-header .ruler--white{border-color:#FFFFFF;}
     .brand-header .nav-menu-title{font-family:Georgia;float:left;font-size:0.87rem;max-width:110px;min-height:35px;margin:0;}
+    .mobile-menu img{min-width:50%}
     @media (max-width: 1200px) and (min-width: 992px){
     .brand-header .nav-menu-title{font-size:0.83rem;}
     }

@@ -86,6 +86,9 @@
     font-size: .9em;
     line-height: 1.45;
   }
+  #loginContainer .type-1 {
+    margin-bottom:2em;
+  }
   #loginContainer .type-1 a:hover {
     padding-left: 48px;
     padding-right: 28px;
