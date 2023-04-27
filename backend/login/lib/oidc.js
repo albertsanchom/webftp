@@ -71,8 +71,11 @@ module.exports = function (app, config){
 		res.clearCookie("sessionOIDC");
 		res.clearCookie("sessionOIDC.0");
 		res.clearCookie("sessionOIDC.1");
-		res.oidc.logout({"returnTo": config.baseURL});
-		//res.redirect("/");
+		try{
+			res.oidc.logout({"returnTo": config.baseURL});
+		}catch(e){
+			res.redirect("/");
+		}
 	});
 
     return {
