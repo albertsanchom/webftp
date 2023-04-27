@@ -11,9 +11,7 @@ module.exports = function (app, config){
 			secret: config.cookies_secret,
 			idpLogout: true,
 			routes : {
-				callback: config.api_path + config.redirectURIPath,
-				postLogoutRedirect: '/'
-			},
+				callback: config.api_path + config.redirectURIPath			},
 			authorizationParams: {
 				response_type: 'code',
 				scope: config.scopes || 'openid profile email',
@@ -68,14 +66,14 @@ module.exports = function (app, config){
 		res.redirect(`${redirect}?token=${access_token}`);
 	});
 
-	/*app.get(config.api_path+'/logout', async function(req, res){
+	app.get(config.api_path+'/logout', async function(req, res){
 		res.clearCookie("oidc_token");
 		res.clearCookie("sessionOIDC");
 		res.clearCookie("sessionOIDC.0");
 		res.clearCookie("sessionOIDC.1");
 		res.oidc.logout({"returnTo": config.baseURL});
-		res.redirect("/");
-	});*/
+		//res.redirect("/");
+	});
 
     return {
         'requiresAuth' : requiresAuth
