@@ -2,7 +2,7 @@
   <section id="loginContainer" v-if="!isLogged">
     <div class="type-1">
         <div>
-            <a href="/api/auth" id="login" class="btn btn-2" v-on:click="doLogin()">
+            <a href="/api/auth" id="login" class="btn btn-2" v-on:click="doLogin('')">
                 <span class="txt">{{ $t('login') }}</span>
                 <span class="round"><i class="fa fa-chevron-right"></i></span>
             </a>
@@ -11,7 +11,7 @@
 
     <div class="type-1">
         <div>
-            <a href="/api/google/auth" id="google-login" class="btn btn-2" v-on:click="doLogin()">
+            <a href="/api/google/auth" id="google-login" class="btn btn-2" v-on:click="doLogin('/google')">
                 <span class="txt">{{ $t('google-login') }}</span>
                 <span class="round"><i class="fa fa-chevron-right"></i></span>
             </a>
@@ -135,9 +135,10 @@
       }
     },
     methods: {
-      doLogin() {
+      doLogin(service){
         if(window.location.pathname.toString().length>1){
             window.location.replace("/api/auth?redirect="+window.location.toString());
+            window.localStorage.setItem("login", service);
         }
       },
       emitLogged(data) {
