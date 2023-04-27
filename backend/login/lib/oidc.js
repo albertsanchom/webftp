@@ -19,12 +19,12 @@ module.exports = function (app, config){
 				redirect_uri: config.baseURL + config.api_path + config.redirectURIPath,
 				prompt : 'login'
 			},
-            session : {
-                rolling: true,
-                rollingDuration: config.cookies_ttl,
-                absoluteDuration: config.cookies_ttl,
+            		session : {
+				rolling: true,
+				rollingDuration: config.cookies_ttl,
+				absoluteDuration: config.cookies_ttl,
 				name: 'sessionOIDC' 
-            },       
+			},       
 			afterCallback: (req, res, session) => {
 				res.cookie('oidc_token', session.id_token, {'path': '/', 'httpOnly': true, 'secure': true, 'sameSite': 'strict', 'maxAge': config.cookies_ttl*1000});
 				return session;
@@ -72,7 +72,8 @@ module.exports = function (app, config){
 		res.clearCookie("sessionOIDC");
 		res.clearCookie("sessionOIDC.0");
 		res.clearCookie("sessionOIDC.1");
-		res.redirect("/");
+		res.oidc.logout({"returnTo": config.baseURL});
+		//res.redirect("/");
 	});
 
     return {
