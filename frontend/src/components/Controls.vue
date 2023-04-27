@@ -1,6 +1,6 @@
 <template>
     <div id="actions" v-if="isLogged">
-        <h2 class="pull-left">Hola {{userName}} <a :href="endpoint+`logout`">Logout</a></h2>
+        <h2 class="pull-left">Hola {{userName}} <a :href="endpoint+window.localStorage.getItem('service')+`logout`">Logout</a></h2>
         <span v-if="!authError">
         <a href="#" v-on:click.prevent="sendAction('create')" v-if="!isRoot && !isRootForUser && readWrite==='rw'" class="pull-right"><i class="fa fa-folder-plus fa-2x" aria-hidden="true" :title="$t('actionAdd')"></i></a>
         <a href="#" v-on:click.prevent="sendAction('browse')" v-if="!isRoot && !isRootForUser" class="pull-right"><i class="fa fa-sync fa-2x" aria-hidden="true" :title="$t('actionRefresh')"></i></a>
