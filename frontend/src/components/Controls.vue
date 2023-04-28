@@ -7,7 +7,7 @@
         <a href="#" v-on:click.prevent="sendAction('download')" v-if="!isRoot && !isRootForUser" class="pull-right"><i class="fa fa-download fa-2x" aria-hidden="true" :title="$t('actionDownload')"></i></a>
         <a href="#" v-on:click.prevent="sendAction('delete')" v-if="!isRoot && !isRootForUser && readWrite==='rw'" class="pull-right icon-delete"><i class="fa fa-trash fa-2x" aria-hidden="true" :title="$t('actionDelete')"></i></a>
         </span>
-        <a :href="endpoint+`logout`"><i class="fa fa-right-from-bracket fa-2x" aria-hidden="true" :title="$t('actionLogout')"></i></a>
+        <a :href="endpoint+`logout`"><i class="fa fa-right-from-bracket fa-2x" aria-hidden="true" :title="$t('actionLogout')"></i></a> 
     </div>
 </template>
 
