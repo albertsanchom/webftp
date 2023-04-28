@@ -33,6 +33,7 @@ const i18n = createI18n({
       "actionDelete" : "Elimina",
       "actionDownload" : "Descarrega",
       "actionRefresh" : "Refresca",
+      "actionLogout" : "Surt de l'aplicació",      
       "authError" : "Probablement no tinguis permisos",
       "fetchError" : "S'ha produït un error en recuperar les dades. Si us plau, torna a fer la petició"
     },
@@ -60,6 +61,7 @@ const i18n = createI18n({
       "actionDelete" : "Elimina",
       "actionDownload" : "Descarga",
       "actionRefresh" : "Refresca",
+      "actionLogout" : "Sal de la aplicación",      
       "authError" : "Probablemente no tengas permisos",
       "fetchError" : "Se ha producido un error al recuperar los datos. Por favor, vuelve a solicitar los datos"
     },
@@ -87,6 +89,7 @@ const i18n = createI18n({
       "actionDelete" : "Delete",
       "actionDownload" : "Download",
       "actionRefresh" : "Refresh",
+      "actionLogout" : "Logout",      
       "authError" : "you don't have permissions",
       "fetchError" : "an error ocurred while fetching data. Please refresh"
     }
