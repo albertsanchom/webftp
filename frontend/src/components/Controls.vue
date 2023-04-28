@@ -1,13 +1,13 @@
 <template>
     <div id="actions" v-if="isLogged">
         <h2 class="pull-left">Hola {{userName}}</h2>
+        <a :href="logoutPath+`logout`" class="pull-right icon-logout"><i class="fa fa-right-from-bracket fa-2x" aria-hidden="true" :title="$t('actionLogout')"></i></a> 
         <span v-if="!authError">
         <a href="#" v-on:click.prevent="sendAction('create')" v-if="!isRoot && !isRootForUser && readWrite==='rw'" class="pull-right"><i class="fa fa-folder-plus fa-2x" aria-hidden="true" :title="$t('actionAdd')"></i></a>
         <a href="#" v-on:click.prevent="sendAction('browse')" v-if="!isRoot && !isRootForUser" class="pull-right"><i class="fa fa-sync fa-2x" aria-hidden="true" :title="$t('actionRefresh')"></i></a>
         <a href="#" v-on:click.prevent="sendAction('download')" v-if="!isRoot && !isRootForUser" class="pull-right"><i class="fa fa-download fa-2x" aria-hidden="true" :title="$t('actionDownload')"></i></a>
         <a href="#" v-on:click.prevent="sendAction('delete')" v-if="!isRoot && !isRootForUser && readWrite==='rw'" class="pull-right icon-delete"><i class="fa fa-trash fa-2x" aria-hidden="true" :title="$t('actionDelete')"></i></a>
         </span>
-        <a :href="logoutPath+`logout`" class="pull-right icon-logout"><i class="fa fa-right-from-bracket fa-2x" aria-hidden="true" :title="$t('actionLogout')"></i></a> 
     </div>
 </template>
 
