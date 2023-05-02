@@ -1,9 +1,60 @@
 const jose = require('jose')
 const s3select = require("./s3select");
+const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+
+const client = new S3Client({'region' : process.env.REGION || 'eu-west-1'});
 
 const _BUCKET = process.env.BUCKET || "";
 const _FILE = process.env.FILE || "";
+const _GOOGLE_x509_KEY = "googlex509.txt"
 
+let google_cert = null;
+
+async function getGoogle509fromS3(){
+  const command = new GetObjectCommand({
+    Bucket: _BUCKET,
+    Key: _GOOGLE_x509_KEY
+  });
+
+  try {
+    const response = await client.send(command);
+    const str = await response.Body.transformToString();
+    return str;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+async function putGoogle509toS3(x509){
+  const input = { 
+    ACL: "private",
+    Body: x509,
+    Bucket: _BUCKET, 
+    Key: _GOOGLE_x509_KEY
+  };
+
+  try {
+    const command = new PutObjectCommand(input);
+    const response = await client.send(command);
+    console.log(response);
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+async function getGoogleCert(certKey){
+  try{
+    const response = await fetch('https://www.googleapis.com/oauth2/v1/certs');
+    const json = await response.json();
+    putGoogle509toS3(json[certKey]);
+    return json[certKey];
+  }catch(e){
+    console.error(e.message);
+    return null;
+  }
+}
 
 async function getTokenPayload(publicCert, issuer, clientID, token){
   const alg = 'RS256'
@@ -97,7 +148,30 @@ module.exports.handler = async (event, context, callback) => {
     user = await getTokenPayload(process.env.OID_PUBLIC_x509, process.env.ISSUER, process.env.OID_CLIENTID, token);
 
     if(user.error!==null){
-      user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
+      //user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
+      // --> to improve
+      let google_refresh = false;
+      const jwt_headers = await jose.decodeProtectedHeader(token);
+
+      if(google_cert===null){
+        google_cert = await getGoogle509fromS3();
+        if(google_cert===null){
+          google_cert = await getGoogleCert(jwt_headers.kid);
+          google_refresh = true;
+        }
+      }
+
+      if(google_cert!==null){
+        user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
+        if(user.error!==null){
+          if(!google_refresh){
+            google_cert = await getGoogleCert(jwt_headers.kid);
+            if(google_cert!==null){
+              user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
+            }
+          }
+        }
+      }      
     }
 
     if(user.error!==null){
