@@ -456,7 +456,8 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 0
+            identitySource: method.request.header.Cookie
+            resultTtlInSeconds: 300
             type: request 
 
   delete:
@@ -468,7 +469,8 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 0
+            identitySource: method.request.header.Cookie
+            resultTtlInSeconds: 300
             type: request 
     timeout: 30
 
@@ -481,7 +483,8 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 0
+            identitySource: method.request.header.Cookie
+            resultTtlInSeconds: 300
             type: request 
 
   download:
@@ -493,7 +496,8 @@ functions:
           cors: true
           authorizer:
             name: custom-auth
-            resultTtlInSeconds: 0
+            identitySource: method.request.header.Cookie
+            resultTtlInSeconds: 300
             type: request 
 
   login:
