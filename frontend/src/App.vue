@@ -190,6 +190,7 @@
         this.isLogged = data.isLogged;
         if(!this.isLogged){
           window.localStorage.removeItem("token_name");
+          await this.$getRequest(endpoint.get() + "logout/?onlycookies=true");
         }
       },
       /*isValidToken() {

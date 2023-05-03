@@ -36,9 +36,8 @@ async function putGoogle509toS3(x509){
 
   try {
     const command = new PutObjectCommand(input);
-    const response = await client.send(command);
-    console.log(response);
-  } catch (err) {
+    return await client.send(command);
+  }catch(err) {
     console.error(err);
     return null;
   }
@@ -149,29 +148,19 @@ module.exports.handler = async (event, context, callback) => {
 
     if(user.error!==null){
       //user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
-      // --> to improve
-      let google_refresh = false;
-      const jwt_headers = await jose.decodeProtectedHeader(token);
 
-      if(google_cert===null){
-        google_cert = await getGoogle509fromS3();
-        if(google_cert===null){
-          google_cert = await getGoogleCert(jwt_headers.kid);
-          google_refresh = true;
-        }
-      }
+      const jwt_headers = await jose.decodeProtectedHeader(token);
+      google_cert = google_cert || await getGoogle509fromS3() || await getGoogleCert(jwt_headers.kid);
 
       if(google_cert!==null){
         user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
         if(user.error!==null){
-          if(!google_refresh){
-            google_cert = await getGoogleCert(jwt_headers.kid);
-            if(google_cert!==null){
-              user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
-            }
+          google_cert = await getGoogleCert(jwt_headers.kid);
+          if(google_cert!==null){
+            user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
           }
         }
-      }      
+      }    
     }
 
     if(user.error!==null){

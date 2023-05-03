@@ -67,15 +67,21 @@ module.exports = function (app, config){
 	});
 
 	app.get(config.api_path+'/logout', async function(req, res){
+		const onlyCookies = req.query.onlycookies=="true"?true:false;
+		
 		res.clearCookie("oidc_token");
 		res.clearCookie("sessionOIDC");
 		res.clearCookie("sessionOIDC.0");
 		res.clearCookie("sessionOIDC.1");
-		if(config.issuer!=='https://accounts.google.com'){
-			res.oidc.logout({"returnTo": config.baseURL});
-		}else{
-			res.redirect("/");
+
+		if(!onlycookies){
+			if(config.issuer!=='https://accounts.google.com'){
+				res.oidc.logout({"returnTo": config.baseURL});
+			}else{
+				res.redirect("/");
+			}
 		}
+		res.status(200).send("done");
 	});
 
     return {

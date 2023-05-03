@@ -542,7 +542,7 @@ functions:
       ISSUER: ${self:custom.issuer}
       OID_PUBLIC_x509: ${self:custom.oidPublicX509}
       OID_CLIENTID: ${self:custom.oidClientId}
-      G_OID_PUBLIC_x509: ${self:custom.gOidPublicX509}
+      #G_OID_PUBLIC_x509: ${self:custom.gOidPublicX509}
       G_OID_CLIENTID: ${self:custom.gOidClientId}
       REGION: ${self:provider.region}
 
