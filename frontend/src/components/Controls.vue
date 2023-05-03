@@ -1,5 +1,5 @@
 <template>
-    <div id="actions" v-if="isLogged">
+    <div id="actions" v-if="isLogged && appLoaded">
         <h2 class="pull-left">Hola {{userName}}</h2>
         <a :href="logoutPath+`logout`" class="pull-right icon-logout"><i class="fa fa-right-from-bracket fa-2x" aria-hidden="true" :title="$t('actionLogout')"></i></a> 
         <span v-if="!authError">
@@ -63,7 +63,7 @@
 
   export default {
     name : 'ControlsComponent',
-    props : ['isRoot','isRootForUser', 'userName', 'isLogged', 'authError', 'readWrite', 'endpoint'],
+    props : ['isRoot','isRootForUser', 'userName', 'isLogged', 'authError', 'readWrite', 'endpoint', 'appLoaded'],
     data(){
       this.logoutPath = this.endpoint + (window.localStorage.getItem("login")||"");
     },    

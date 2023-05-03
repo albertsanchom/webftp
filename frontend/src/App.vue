@@ -23,6 +23,7 @@
                 v-bind:authError="authError"
                 v-bind:readWrite="readWrite"
                 v-bind:endpoint="endpoint"
+                v-bind:appLoaded="appLoaded"
       />
 
       <Browser @browse="browseControler"
@@ -138,21 +139,22 @@
       return {
         s3data : {},
         currentDir : "",
-        loading : false,
+        loading : true,
         message : "",
         uploadMsg : "",
         isRoot : true,
         isRootForUser : true,
         config : {},
         log : [],
-        isLogged : false,
+        isLogged : true,
         readWrite : 'rw',
         updates : {},
         userName : "",
         authError : false,
         fetchError : false,
         folderSearch : true,
-        endpoint : endpoint.get()
+        endpoint : endpoint.get(),
+        appLoaded : false
       }
     },/*
     mounted() {
@@ -172,7 +174,7 @@
     async created() {
       document.title = "WebFTP Gencat";
       try{
-        this.config = await this.$getRequest(endpoint.get() + "getconfig/?");
+        this.config = await this.$getRequest(this.endpoint + "getconfig/?");
       }catch(e){
         console.log(e.message);
       }
@@ -190,7 +192,7 @@
         this.isLogged = data.isLogged;
         if(!this.isLogged){
           window.localStorage.removeItem("token_name");
-          await this.$getRequest(endpoint.get() + "logout/?onlycookies=true");
+          await this.$getRequest(this.endpoint + "logout/?onlycookies=true");
         }
       },
       /*isValidToken() {
@@ -217,7 +219,7 @@
               this.log.push({"name": folder, "path": this.currentDir.split("/").slice(1).join("/"), "creating" : true, "randomKey" : +new Date});
               let signedForm;
               try{
-                signedForm = await this.$getRequest(endpoint.get() + "getuploadform?path="+encodeURIComponent(this.currentDir)+"/");
+                signedForm = await this.$getRequest(this.endpoint + "getuploadform?path="+encodeURIComponent(this.currentDir)+"/");
               }catch(e){
                 console.log("maybe unauthorized");
                 this.setLogged({isLogged:false, name: null});
@@ -247,7 +249,7 @@
               });
               let response;
               try{
-                response = await this.$postRequest(endpoint.get() + "deletekeys", JSON.stringify({"keys" : keys}), true);
+                response = await this.$postRequest(this.endpoint + "deletekeys", JSON.stringify({"keys" : keys}), true);
               }catch(e){
                 console.log("maybe unauthorized");
                 this.setLogged({isLogged:false, name: null});
@@ -276,7 +278,7 @@
             if(keys.length>0){
               let response;
               try{
-                response = await this.$postRequest(endpoint.get() + "getpresignedurls", JSON.stringify({"keys" : keys}), true);
+                response = await this.$postRequest(this.endpoint + "getpresignedurls", JSON.stringify({"keys" : keys}), true);
               }catch(e){
                 console.log("maybe unauthorized");
                 this.setLogged({isLogged:false, name: null});
@@ -299,7 +301,7 @@
             const files = await this.$traverseFileTree(data.items);
             let signedForm;
             try{
-              signedForm = (await this.$getRequest(endpoint.get() + "getuploadform?path="+encodeURIComponent(this.currentDir)+"/"));
+              signedForm = (await this.$getRequest(this.endpoint + "getuploadform?path="+encodeURIComponent(this.currentDir)+"/"));
             }catch(e){
               console.log("maybe unauthorized");
               this.setLogged({isLogged:false, name: null});
@@ -322,7 +324,7 @@
 
           case "uploadFiles": {
             this.uploadMsg = 'uploadingDrag';
-            const signedForm = (await this.$getRequest(endpoint.get() + "getuploadform?path="+encodeURIComponent(this.currentDir+"/")));
+            const signedForm = (await this.$getRequest(this.endpoint + "getuploadform?path="+encodeURIComponent(this.currentDir+"/")));
             let formData;
             let path;
             const randomKey = Math.random();
@@ -402,7 +404,7 @@
           let pagination = JSON.parse(window.localStorage.getItem("pagination")) || [''];
           pagination.unshift(paginationToken);
           window.localStorage.setItem("pagination", JSON.stringify(pagination));
-          this.s3data = await this.$getRequest(endpoint.get() + "getfiles?path="+encodeURIComponent(this.$trimSlash(this.currentDir))+(paginationToken?"&continuationToken="+encodeURIComponent(paginationToken):"")+(folderSearch!==''?"&folderSearch=false":""));
+          this.s3data = await this.$getRequest(this.endpoint + "getfiles?path="+encodeURIComponent(this.$trimSlash(this.currentDir))+(paginationToken?"&continuationToken="+encodeURIComponent(paginationToken):"")+(folderSearch!==''?"&folderSearch=false":""));
           this.loading = false;
           this.retrying=false;
         }catch(e){ 
@@ -447,6 +449,7 @@
           this.currentDir = this.currentDir.slice(0,-1);
         }
         //this.loading = false;
+        this.appLoaded = true;
       }
     }
   }
