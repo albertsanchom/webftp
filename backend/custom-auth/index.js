@@ -58,9 +58,9 @@ async function getGoogleCert(certKey){
 async function getTokenPayload(publicCert, issuer, clientID, token){
   const alg = 'RS256'
   let x509 = publicCert;
-  const publicKey = await jose.importX509(x509, alg)
 
   try{
+    const publicKey = await jose.importX509(x509, alg);
     const { payload } = await jose.jwtVerify(token, publicKey, {
       issuer: issuer,
       audience: clientID,
@@ -141,40 +141,35 @@ module.exports.handler = async (event, context, callback) => {
     return ('Unauthorized ', 'No token'); // Return a 401 Unauthorized response
   }
 
-  try{
-    let user = null;
+  let user = null;
 
-    user = await getTokenPayload(process.env.OID_PUBLIC_x509, process.env.ISSUER, process.env.OID_CLIENTID, token);
+  user = await getTokenPayload(process.env.OID_PUBLIC_x509, process.env.ISSUER, process.env.OID_CLIENTID, token);
 
-    if(user.error!==null){
-      //user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
+  if(user.error!==null){
+    //user = await getTokenPayload(process.env.G_OID_PUBLIC_x509, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
 
-      const jwt_headers = await jose.decodeProtectedHeader(token);
-      google_cert = google_cert || await getGoogle509fromS3() || await getGoogleCert(jwt_headers.kid);
+    const jwt_headers = await jose.decodeProtectedHeader(token);
+    google_cert = google_cert || await getGoogle509fromS3() || await getGoogleCert(jwt_headers.kid);
 
-      if(google_cert!==null){
-        user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
-        if(user.error!==null){
-          google_cert = await getGoogleCert(jwt_headers.kid);
-          if(google_cert!==null){
-            user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
-          }
+    if(google_cert!==null){
+      user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
+      if(user.error!==null){
+        google_cert = await getGoogleCert(jwt_headers.kid);
+        if(google_cert!==null){
+          user = await getTokenPayload(google_cert, process.env.G_ISSUER, process.env.G_OID_CLIENTID, token);
         }
-      }    
-    }
-
-    if(user.error!==null){
-      return ('Unauthorized ', user.error); // Return a 401 Unauthorized response
-    }
-
-    const permissions = await getPermissions(user.email);
-    const effect = Object.keys(permissions).length>0 ? "Allow" : "Deny";
-    const authorizerContext = { "user": user.email, "permissions" : JSON.stringify(permissions)};
-    const policyDocument = buildIAMPolicy(user.email, effect, event.methodArn, authorizerContext);
-
-    return (null, policyDocument); 
-  }catch(e) {
-    console.error(e.message);
-    return ('Unauthorized ', e.message); // Return a 401 Unauthorized response
+      }
+    }    
   }
+
+  if(user.error!==null){
+    return ('Unauthorized ', user.error); // Return a 401 Unauthorized response
+  }
+
+  const permissions = await getPermissions(user.email);
+  const effect = Object.keys(permissions).length>0 ? "Allow" : "Deny";
+  const authorizerContext = { "user": user.email, "permissions" : JSON.stringify(permissions)};
+  const policyDocument = buildIAMPolicy(user.email, effect, event.methodArn, authorizerContext);
+
+  return (null, policyDocument); 
 };
