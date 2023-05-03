@@ -470,7 +470,7 @@ functions:
           authorizer:
             name: custom-auth
             identitySource: method.request.header.Cookie
-            resultTtlInSeconds: 300
+            resultTtlInSeconds: 0
             type: request 
     timeout: 30
 
@@ -484,7 +484,7 @@ functions:
           authorizer:
             name: custom-auth
             identitySource: method.request.header.Cookie
-            resultTtlInSeconds: 300
+            resultTtlInSeconds: 0
             type: request 
 
   download:
@@ -497,7 +497,7 @@ functions:
           authorizer:
             name: custom-auth
             identitySource: method.request.header.Cookie
-            resultTtlInSeconds: 300
+            resultTtlInSeconds: 0
             type: request 
 
   login:
