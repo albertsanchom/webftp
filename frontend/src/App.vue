@@ -185,7 +185,7 @@
       checkIfRoot() {
           this.isRoot = this.currentDir==="" ? true : false;
       },
-      setLogged(data) {
+      async setLogged(data) {
         this.userName = data.name || null;
         this.isLogged = data.isLogged;
         if(!this.isLogged){
