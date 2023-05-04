@@ -1,5 +1,5 @@
 <template>
-  <div id="browser" v-if="isLogged">
+  <div id="browser" v-if="isLogged && !loading">
 
     <template v-if="authError">
         <h3>{{this.messages['authError']}}</h3>

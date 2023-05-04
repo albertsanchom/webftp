@@ -16,6 +16,7 @@
       />
 
       <Controls @action="actionControler"
+                v-if="appLoaded" 
                 v-bind:isRoot="isRoot"
                 v-bind:isRootForUser="isRootForUser"
                 v-bind:userName="userName"
@@ -23,7 +24,6 @@
                 v-bind:authError="authError"
                 v-bind:readWrite="readWrite"
                 v-bind:endpoint="endpoint"
-                v-bind:appLoaded="appLoaded"
       />
 
       <Browser @browse="browseControler"

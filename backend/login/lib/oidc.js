@@ -74,6 +74,13 @@ module.exports = function (app, config){
 		if(config.issuer!=='https://accounts.google.com'){
 			res.oidc.logout({"returnTo": config.baseURL});
 		}else{
+			try{
+				let url = (await fetch("/api/google/getAccess")).url; 
+				const token=url.slice(url.indexOf("token=")+6);
+				await fetch("https://accounts.google.com/o/oauth2/revoke?token="+token;
+			}catch(e){
+				console.error(e.message);
+			}
 			res.redirect("/");
 		}
 	});
