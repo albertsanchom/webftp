@@ -28,9 +28,9 @@
   }
 
   .icon-logout{
-    margin-left: 1em!important;
+    margin-left: 3em!important;
+    margin-right: 3em!important;
   }
-
 
   #actions a{
       margin-right: .5em;

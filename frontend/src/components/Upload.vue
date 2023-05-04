@@ -1,5 +1,5 @@
 <template>
-  <div id="upload-area" v-if="isLogged && !isRoot && !isRootForUser && !authError && readWrite==='rw'"
+  <div id="upload-area" v-if="!loading && isLogged && !isRoot && !isRootForUser && !authError && readWrite==='rw'"
     v-on:dragover.stop.prevent="uploadMessage('uploadDrag')"
     v-on:dragleave.stop.prevent="uploadMessage('drag')"
     v-on:drop.stop.prevent="drop"
@@ -35,7 +35,7 @@
 
   export default {
   name : 'ControlsComponent',
-  props : ['isRoot','uploadMsg', 'isLogged', 'isRootForUser', 'authError', 'readWrite'],
+  props : ['isRoot','uploadMsg', 'isLogged', 'isRootForUser', 'authError', 'readWrite', 'loading'],
   watch: { 
     uploadMsg: function(msg) { 
       if(this.uploadMessage){

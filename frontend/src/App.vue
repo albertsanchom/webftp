@@ -46,6 +46,7 @@
               v-bind:isRootForUser="isRootForUser"
               v-bind:authError="authError"
               v-bind:readWrite="readWrite"
+              v-bind:loading="loading"
       />
 
       <Log v-bind:log="log"
@@ -63,6 +64,7 @@
     margin: 0;
     padding: 0;
   }
+
   #container {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
