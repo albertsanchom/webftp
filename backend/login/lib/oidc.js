@@ -71,13 +71,13 @@ module.exports = function (app, config){
 		res.clearCookie("sessionOIDC");
 		res.clearCookie("sessionOIDC.0");
 		res.clearCookie("sessionOIDC.1");
+		
 		if(config.issuer!=='https://accounts.google.com'){
 			res.oidc.logout({"returnTo": config.baseURL});
 		}else{
 			try{
-				let url = (await fetch("/api/google/getAccess")).url; 
-				const token=url.slice(url.indexOf("token=")+6);
-				await fetch("https://accounts.google.com/o/oauth2/revoke?token="+token);
+				const url = (await fetch("/api/google/getAccess")).url; 
+				await fetch("https://accounts.google.com/o/oauth2/revoke?token="+url.slice(url.indexOf("token=")+6));
 			}catch(e){
 				console.error(e.message);
 			}
