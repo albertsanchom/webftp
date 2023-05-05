@@ -71,7 +71,7 @@ const _getBestPermissionMatch = (permissions, requestedPath) => {
             bestMatch = {'equals' : true, 'index' : i};
             break;
         }else if((requestedPath+"/").indexOf(permissions[i].folder+"/")===0){
-            if(bestMatch.index===-1 || permissions[i].folder.length>permissions[bestMatch.index].folder){// longest folder
+            if(bestMatch.index===-1 || permissions[i].folder.length>permissions[bestMatch.index].folder.length){// longest folder
                 bestMatch = {'equals' : false, 'index' : i};
             }
         }else if(permissions[i].folder==="" && bestMatch.index===-1){
