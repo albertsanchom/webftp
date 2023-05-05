@@ -75,9 +75,7 @@ module.exports = function (app, config){
 			res.oidc.logout({"returnTo": config.baseURL});
 		}else{
 			try{
-				let url = (await fetch("/api/google/getAccess")).url; 
-				const token=url.slice(url.indexOf("token=")+6);
-				await fetch("https://accounts.google.com/o/oauth2/revoke?token="+token);
+				await fetch("https://accounts.google.com/o/oauth2/revoke?token="+req.oidc.accessToken);
 			}catch(e){
 				console.error(e.message);
 			}
