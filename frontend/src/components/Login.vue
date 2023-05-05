@@ -140,7 +140,7 @@
     methods: {
       doLogin(service){
         if(window.location.pathname.toString().length>1){
-            window.location.replace("/api/auth?redirect="+window.location.toString());
+            window.location.replace("/api"+service+"/auth?redirect="+window.location.toString());
         }
         window.localStorage.setItem("login", service);
       },
