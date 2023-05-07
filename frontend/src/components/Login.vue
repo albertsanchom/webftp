@@ -2,7 +2,7 @@
   <section id="loginContainer" v-if="!isLogged">
     <div class="type-1">
         <div>
-            <a href="/api/auth" id="login" class="btn btn-2" v-on:click="doLogin('')">
+            <a href="#" id="login" class="btn btn-2" v-on:click.prevent="doLogin('')">
                 <span class="txt">{{ $t('login') }}</span>
                 <span class="round"><i class="fa fa-chevron-right"></i></span>
             </a>
@@ -11,7 +11,7 @@
 
     <div class="type-1">
         <div>
-            <a href="/api/google/auth" id="google-login" class="btn btn-2" v-on:click="doLogin('google/')">
+            <a href="#" id="google-login" class="btn btn-2" v-on:click.prevent="doLogin('google/');">
                 <span class="txt">{{ $t('google-login') }}</span>
                 <span class="round"><i class="fa fa-chevron-right"></i></span>
             </a>
@@ -126,7 +126,7 @@
       try{
         profile = await this.$getRequest(endpoint.get() + "profile");
       }catch(e){
-        console.log(e.message);
+        console.log("Error accessing profile, not logged");
       }
 
       if(profile && typeof profile==="object"){
@@ -139,10 +139,12 @@
     },
     methods: {
       doLogin(service){
-        if(window.location.pathname.toString().length>1){
-            window.location.replace("/api"+service+"/auth?redirect="+window.location.toString());
-        }
         window.localStorage.setItem("login", service);
+        if(window.location.pathname.toString().length>1){
+            window.location.replace(endpoint.get()+service+"auth?redirect="+window.location.toString());
+        }else{
+          window.location.replace(endpoint.get()+service+"auth");
+        }
       },
       emitLogged(data) {
         this.$emit("logged", data);
