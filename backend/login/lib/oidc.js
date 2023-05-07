@@ -77,7 +77,7 @@ module.exports = function (app, config){
 		}else{
 			try{
 				const url = (await fetch("/api/google/getAccess")).url; 
-				await fetch("https://accounts.google.com/o/oauth2/revoke?token="+url.slice(url.indexOf("token=")+6));
+				await (await fetch("https://accounts.google.com/o/oauth2/revoke?token="+url.slice(url.indexOf("token=")+6))).json();
 			}catch(e){
 				console.error(e.message);
 			}

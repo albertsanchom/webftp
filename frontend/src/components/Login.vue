@@ -140,11 +140,11 @@
     methods: {
       doLogin(service){
         window.localStorage.setItem("login", service);
+        let redirect = "";
         if(window.location.pathname.toString().length>1){
-            window.location.replace(endpoint.get()+service+"auth?redirect="+window.location.toString());
-        }else{
-          window.location.replace(endpoint.get()+service+"auth");
+            redirect = "?redirect="+window.location.toString();
         }
+        window.location.replace(endpoint.get()+service+"auth"+redirect);
       },
       emitLogged(data) {
         this.$emit("logged", data);
