@@ -124,7 +124,7 @@
       let profile = null;
 
       try{
-        profile = await this.$getRequest(endpoint.get() + "profile");
+        profile = await this.$getRequest(endpoint.get() + (window.localStorage.getItem("login")||"") + "profile");
       }catch(e){
         console.log("Error accessing profile, not logged");
       }

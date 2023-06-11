@@ -17,7 +17,7 @@
             <span v-for="(item, index) in getBreadcrumbs()" :key="index">
               <template v-if="index < Object.keys(getBreadcrumbs()).length - 1">
                 <!--&nbsp;-->
-                <a :href="'/'+prettyName(item.fullpath)" v-on:click.prevent="sendBrowse(item.fullpath, 'default')" :title="showTitle(item.name)"> 
+                <a :href="'/'+item.fullpath" v-on:click.prevent="sendBrowse(item.fullpath, 'default')" :title="showTitle(item.name)"> 
                   <template v-if="index==0">
                     {{prettyName(item.name)}}
                   </template>
@@ -65,12 +65,12 @@
           <input v-on:change="checkDownloadAction()" type='checkbox' class='ftps3-action ftps3-action-folder ftps3-action-selectable' v-bind:value="currentDir + '/'+cleanKey(item.Prefix, s3data.Prefix)" v-if="!isRoot && !isRootForUser"/>
           <i class='fa fa-folder' aria-hidden='true'></i> 
             <template v-if="isRoot">
-              <a :href="'/'+prettyName(item.Prefix, s3data.Prefix)" v-on:click.prevent="sendBrowse(cleanKey(item.Prefix, s3data.Prefix))" :title="showTitle(item.Prefix, s3data.Prefix)">
+              <a :href="'/'+(item.Prefix, s3data.Prefix)" v-on:click.prevent="sendBrowse(cleanKey(item.Prefix, s3data.Prefix))" :title="showTitle(item.Prefix, s3data.Prefix)">
                 {{prettyName(item.Prefix, s3data.Prefix)}}
               </a>
             </template>
             <template v-else>
-              <a :href="'/'+prettyName(this.currentDir)+'/'+cleanKey(item.Prefix, s3data.Prefix)" v-on:click.prevent="sendBrowse(cleanKey(item.Prefix, s3data.Prefix))" :title="showTitle(item.Prefix, s3data.Prefix)">
+              <a :href="'/'+(this.currentDir)+'/'+cleanKey(item.Prefix, s3data.Prefix)" v-on:click.prevent="sendBrowse(cleanKey(item.Prefix, s3data.Prefix))" :title="showTitle(item.Prefix, s3data.Prefix)">
                 {{strShortener(prettyName(item.Prefix, s3data.Prefix))}}
               </a>
             </template>
